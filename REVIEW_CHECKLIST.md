@@ -48,12 +48,16 @@ confirmed by Sim Soklim.
 - [ ] The commented block holds exactly the five CV referees with their CV numbers
 - [ ] Decision recorded: publish references, or supply them on request only
 - [ ] **[client]** Explicit consent obtained if references are to be published
+- [ ] `assets/Sim-Soklim-CV.pdf` is the redacted copy: open it and confirm the
+      References block is gone while the AutoCAD/DCD training is still there
+- [ ] `python tools/make_public_cv.py` reports `leaked: none` and `missing: none`
+- [ ] The downloaded PDF is confirmed to contain no referee name or number
+      (select all, copy, paste into a text editor)
+- [ ] `assets/Sim-Soklim-CV-original.pdf` is git-ignored and never deployed
 - [ ] Portrait is the CV photo and is approved for the web **[client]**
 - [ ] **[client]** Approval for the current job title, employers and dates
-- [ ] Decide what `assets/Sim-Soklim-CV.pdf` should be: the CV pages only, or
-      the CV **and** the covering letter, which names a specific employer
-- [ ] If the CV stays bundled, note that it still shows the referee names and
-      phone numbers even though the page does not publish them
+- [ ] **[client]** Acknowledge that the CV's Professional Summary names the
+      employer its covering letter was written for; that stays in the PDF
 
 ## 4. Placeholders to replace before launch
 
@@ -137,6 +141,27 @@ Breakpoints in use: 480 / 560 / 720 / 900 / 1180 px.
 - [ ] "Save as PDF" produces a readable multi-page document with the CV link removed
 - [ ] Page title and meta description read correctly in a search snippet preview
 - [ ] `og:title`, `og:description`, `og:image` render a sensible card when shared
+
+---
+
+## 10. Public deploy
+
+Repository: <https://github.com/KangKimpor/sim-soklim-portfolio> (`main`).
+Setup instructions are in README section 8.
+
+- [ ] `python tools/_validate.py` passes, including the new `[csp compatibility]` group
+- [ ] `git status` is clean and the branch is pushed
+- [ ] `assets/Sim-Soklim-CV-original.pdf` is absent from the repository tree
+      (check the file list in the GitHub UI, not just `.gitignore`)
+- [ ] Deployed site returns the expected headers: `content-security-policy`,
+      `x-content-type-options`, `referrer-policy`, `permissions-policy`
+- [ ] Live site loads with no third-party requests and no CSP violations in the
+      browser console
+- [ ] `/assets/Sim-Soklim-CV.pdf` downloads, is 5 pages, and has no References block
+- [ ] Placeholder photography replaced, or written permission recorded
+- [ ] `og:url` / `twitter:url` added once the production domain is known
+- [ ] Privacy of the repository itself: it is **public**, so anyone can read the
+      full commit history — confirm that is intended
 
 ---
 

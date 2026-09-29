@@ -282,6 +282,34 @@ def check_content(html):
         fail("references section markup not found")
 
 
+def check_csp(html):
+    """The strict Content-Security-Policy in vercel.json assumes a clean page.
+
+    `default-src 'self'` with no 'unsafe-inline' means an inline <script>, an
+    inline <script> block, a style attribute or an on* handler would be blocked
+    by the browser rather than by this script. Catch that here instead.
+    """
+    print("[csp compatibility]")
+    if re.search(r"<script(?![^>]*\bsrc=)[^>]*>", html):
+        fail("inline <script> block: the Content-Security-Policy would block it")
+    if re.search(r"\sstyle=\"", html):
+        fail("style attribute present: the Content-Security-Policy would block it")
+    handlers = re.findall(r"\s(on[a-z]+)=", html)
+    if handlers:
+        fail("inline event handler(s) %s: the policy would block them"
+             % ", ".join(sorted(set(handlers))))
+    if not re.search(r"<style[\s>]", html):
+        ok("no inline script, style attribute, on* handler or <style> block")
+    else:
+        fail("<style> block present: the policy would block it")
+
+    for pattern, why in ((r'src="https?://', "remote src"),
+                         (r'<link\b(?![^>]*rel="(?:preconnect|dns-prefetch)")[^>]*href="https?://', "remote link")):
+        if re.search(pattern, html):
+            fail("%s: blocked by the policy's default-src 'self'" % why)
+    ok("policy allows exactly what the page requests")
+
+
 def main():
     print("validating " + ROOT)
     html = read("index.html")
@@ -290,6 +318,7 @@ def main():
     check_assets(html)
     check_markup(html)
     check_no_network(html, css)
+    check_csp(html)
     check_classes(html, css)
     check_tokens(css)
     check_javascript(html)

@@ -7,6 +7,9 @@ package manager, and **zero network requests** once the folder is on disk.
 Open `index.html` in any modern browser and the whole page renders: fonts,
 icons, imagery, styles and the downloadable CV are all local files.
 
+Repository: <https://github.com/KangKimpor/sim-soklim-portfolio> ·
+Deployment: see section 8.
+
 ---
 
 ## 1. Reviewing this build
@@ -230,4 +233,69 @@ Neither is required to view the site, and the fonts are already vendored, so
 
 No icon set, no stock photos and no third-party JavaScript are included; the
 icons are hand-drawn paths in the inline SVG sprite inside `index.html`.
+
+---
+
+## 8. Deploying
+
+The site is a plain static folder, so any static host serves it as-is. No build
+command, no output directory, no environment variables, no secrets.
+
+### Vercel, importing the repository (recommended)
+
+1. Sign in at <https://vercel.com> and choose **Add New → Project**.
+2. Import `KangKimpor/sim-soklim-portfolio`.
+3. Vercel detects no framework, which is correct. Leave **Build Command**
+   empty, **Output Directory** as `public`-less root (i.e. leave it unset /
+   `.`), and **Install Command** empty.
+4. Deploy. Every later push to `main` redeploys automatically.
+
+`vercel.json` in the repo root sets `cleanUrls`, disables trailing slashes, and
+adds the response headers: a strict `Content-Security-Policy`
+(`default-src 'self'`, no `connect-src` and no `form-action`, which the page
+does not need), `X-Content-Type-Options`, `Referrer-Policy` and
+`Permissions-Policy`. It also sets cache lifetimes of 30 days for `/fonts` and
+7 days for `/images`.
+
+The cache windows are deliberately conservative: those filenames are stable
+rather than content-hashed (`hero.webp`, not `hero.a1b2.webp`), so a one-year
+`immutable` header would leave browsers holding a replaced file. If you swap an
+image or a font under the same name, either rename it or version the URL.
+
+The policy is compatible with the page because it has no inline `<script>`,
+no `style` attributes and no `on*` handlers; `img-src` allows `data:` only for
+the inlined paper grain. `tools/_validate.py` checks exactly that, and fails if
+an inline script, style attribute, event handler or remote resource is ever
+introduced, so the policy cannot silently break the page.
+
+### Vercel, from the command line
+
+```bash
+vercel login                    # one-off, opens a browser
+vercel deploy --prod            # or: npx vercel --prod
+```
+
+PowerShell blocks the `vercel.ps1` shim under the default execution policy;
+call the `.cmd` shim directly or relax the policy:
+
+```powershell
+& "$env:APPDATA\npm\vercel.cmd" --prod
+```
+
+### Anything else
+
+Upload the folder as-is: GitHub Pages, Cloudflare Pages, Netlify, S3 + CloudFront
+or a shared-hosting `public_html`. The only thing to change for a canonical
+domain is `og:url` / `twitter:url` in `index.html`, which this build
+deliberately omits.
+
+### Before the first public deploy
+
+* `python tools/_validate.py` → `RESULT: ALL OK`
+* `python tools/make_public_cv.py` → `leaked: none`, `missing: none`
+* Confirm `assets/Sim-Soklim-CV-original.pdf` is git-ignored, so the referees'
+  numbers cannot be served
+* Replace the placeholder photography (section 5), or obtain written permission
+  for the images currently in place
+
 
