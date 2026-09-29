@@ -32,7 +32,7 @@ Requirements: a current Chrome, Edge, Firefox or Safari. Nothing else.
 index.html                 the entire site (semantic, single page)
 css/style.css              design tokens + all layout and component styles
 js/script.js               drawer nav, scroll-spy, scroll progress, portrait fallback, footer year
-fonts/                     7 self-hosted .woff2 files (3 families, 231 KB)
+fonts/                     4 self-hosted .woff2 files (3 families, 113 KB)
 images/
   hero.webp                featured band image  (PLACEHOLDER - see section 5)
   og-hero.jpg              social sharing card (PLACEHOLDER - see section 5)
@@ -224,7 +224,7 @@ Neither is required to view the site, and the fonts are already vendored, so
 
 | Asset | Source | Licence / action needed |
 | --- | --- | --- |
-| Archivo, Source Serif 4, DM Mono (7 `.woff2` files in `fonts/`) | Google Fonts, vendored with `tools/fetch_fonts.py` | SIL Open Font License 1.1 — free to self-host and ship; keep the family names if the fonts are modified |
+| Archivo, Source Serif 4, DM Mono (4 `.woff2` files in `fonts/`) | Google Fonts, vendored with `tools/fetch_fonts.py` | SIL Open Font License 1.1 — free to self-host and ship; keep the family names if the fonts are modified |
 | `images/portrait-cutout.webp` | Extracted from the supplied CV | Confirm Sim Soklim is happy for this photo to appear publicly **[client]** |
 | `images/hero.webp`, `images/og-hero.jpg` | Stand-in construction imagery supplied with this build | **Replace, or obtain written permission for the current images** |
 | `assets/Sim-Soklim-CV.pdf` | Redacted copy of the supplied CV: the five referees' names and direct numbers are deleted, the AutoCAD training is kept | Confirm the CV is cleared for publication **[client]** |

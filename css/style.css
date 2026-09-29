@@ -24,49 +24,29 @@
 
 /* ---------- 01  Self-hosted type ------------------------------------- */
 
-/* Archivo — structural and interface text: headings, names, buttons, data */
+/* Archivo — structural and interface text: headings, names, buttons, data.
+   A variable face, so one file covers the whole weight range: asking the font
+   API for 500, 600 and 700 returns the same bytes three times over. */
 @font-face {
   font-family: 'Archivo';
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400 700;
   font-display: swap;
-  src: url('../fonts/Archivo-500.woff2') format('woff2');
+  src: url('../fonts/Archivo-var.woff2') format('woff2-variations');
 }
 
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('../fonts/Archivo-600.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('../fonts/Archivo-700.woff2') format('woff2');
-}
-
-/* Source Serif 4 — prose: ledes, paragraphs, responsibilities, notes */
+/* Source Serif 4 — prose: ledes, paragraphs, responsibilities, notes.
+   Also variable: 400 and 600 are a single file. */
 @font-face {
   font-family: 'Source Serif 4';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400 600;
   font-display: swap;
-  src: url('../fonts/SourceSerif4-400.woff2') format('woff2');
+  src: url('../fonts/SourceSerif4-var.woff2') format('woff2-variations');
 }
 
-@font-face {
-  font-family: 'Source Serif 4';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('../fonts/SourceSerif4-600.woff2') format('woff2');
-}
-
-/* DM Mono — labels, reference numbers, dates, status */
+/* DM Mono — labels, reference numbers, dates, status. These two really are
+   different static cuts rather than one variable axis. */
 @font-face {
   font-family: 'DM Mono';
   font-style: normal;

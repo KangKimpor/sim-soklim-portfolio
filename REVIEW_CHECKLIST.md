@@ -129,8 +129,11 @@ Breakpoints in use: 480 / 560 / 720 / 900 / 1180 px.
 - [ ] Opens from a `file://` path, a USB stick and an extracted ZIP
 - [ ] Deleting `images/portrait-cutout.webp` shows the `SS` monogram, not a
       broken-image icon
-- [ ] The seven `.woff2` files in `fonts/` load with the network off; no
+- [ ] The four `.woff2` files in `fonts/` load with the network off; no
       fallback to Georgia or a system sans is visible at any point
+- [ ] Headings still read as heavier than body copy — Archivo and Source Serif 4
+      are variable faces declared with a `font-weight` range, so confirm the
+      weight axis is applied rather than every weight rendering identically
 - [ ] The paper grain still renders (it is an inline SVG, not a request)
 
 ## 9. Print and sharing

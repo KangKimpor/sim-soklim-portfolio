@@ -13,9 +13,18 @@ Usage:
 Method: ask the Google Fonts CSS API for the families and weights below with a
 modern browser User-Agent (so it answers with woff2 rather than legacy
 formats), keep only the `/* latin */` @font-face block of each weight, and save
-its woff2 to fonts/<FamilyPrefix>-<weight>.woff2. The latin subset already
-covers general punctuation (U+2000-206F), which is where the en dashes and
-middle dots used across the page live.
+the woff2 files into fonts/.
+
+Two of the three families are variable fonts, and the API answers every weight
+of a variable family with the *same* URL. Saving one file per weight therefore
+just writes the same bytes under three names. So this script groups the weights
+of a family by URL: a family whose weights all point at one file is stored once
+as <Prefix>-var.woff2 (declare it with a font-weight range in CSS), and a
+family with genuinely different files is stored per weight. The script prints
+the @font-face weight range to paste for each variable family.
+
+The latin subset already covers general punctuation (U+2000-206F), which is
+where the en dashes and middle dots used across the page live.
 
 All three families are SIL Open Font License 1.1, which permits self-hosting.
 """
@@ -27,21 +36,23 @@ import urllib.request
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FONT_DIR = os.path.join(REPO_ROOT, "fonts")
 
-API = ("https://fonts.googleapis.com/css2"
-       "?family=Archivo:wght@500;600;700"
-       "&family=Source+Serif+4:wght@400;600"
-       "&family=DM+Mono:wght@400;500"
-       "&display=swap")
+# (CSS family name, file prefix, weights to ask for)
+SPEC = [
+    ("Archivo", "Archivo", [500, 600, 700]),
+    ("Source Serif 4", "SourceSerif4", [400, 600]),
+    ("DM Mono", "DMMono", [400, 500]),
+]
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
 
-# CSS family name -> file prefix
-PREFIX = {
-    "Archivo": "Archivo",
-    "Source Serif 4": "SourceSerif4",
-    "DM Mono": "DMMono",
-}
+
+def api_url():
+    parts = []
+    for family, _prefix, weights in SPEC:
+        parts.append("family=%s:wght@%s"
+                     % (family.replace(" ", "+"), ";".join(str(w) for w in weights)))
+    return "https://fonts.googleapis.com/css2?" + "&".join(parts) + "&display=swap"
 
 
 def get(url, binary=False):
@@ -66,40 +77,72 @@ def faces(css):
             yield family.group(1), int(weight.group(1)), url.group(1)
 
 
+def plan(css):
+    """Group the requested weights by family, then by URL, oldest weight first.
+
+    Returns [(family, prefix, [(name, url, weight, shared_with_n_families)]...)]
+    ordered so a family is either a single variable file or one file per weight.
+    """
+    wanted = {family: (prefix, weights) for family, prefix, weights in SPEC}
+    by_family = {}
+    for family, weight, url in faces(css):
+        if family not in wanted:
+            continue
+        by_family.setdefault(family, []).append((weight, url))
+
+    out = []
+    for family, prefix, _weights in SPEC:
+        entries = sorted(by_family.get(family, []))
+        if not entries:
+            print("  warning: no latin block returned for", family)
+            continue
+        distinct = {url for _w, url in entries}
+        if len(distinct) == 1:
+            # One file for the whole family: the API is serving a variable font.
+            lo, hi = entries[0][0], entries[-1][0]
+            out.append((family, prefix, [("%s-var.woff2" % prefix, entries[0][1], hi)]))
+            print("  %s is variable: %d..%d all point at one file"
+                  % (family, lo, hi))
+        else:
+            files = [("%s-%d.woff2" % (prefix, w), url, w) for w, url in entries]
+            out.append((family, prefix, files))
+    return out
+
+
 def main():
     listing_only = "--list" in sys.argv
-    print("requesting", API.split("?")[0])
-    css = get(API)
+    url = api_url()
+    print("requesting", url.split("?")[0])
+    css = get(url)
 
     os.makedirs(FONT_DIR, exist_ok=True)
-    kept, total = [], 0
-    for family, weight, url in faces(css):
-        prefix = PREFIX.get(family)
-        if not prefix:
-            print("  skipping unknown family:", family)
-            continue
-        name = "%s-%d.woff2" % (prefix, weight)
-        target = os.path.join(FONT_DIR, name)
-        if listing_only:
-            print("  would fetch %s  (%s %d)" % (name, family, weight))
-            continue
-        data = get(url, binary=True)
-        with open(target, "wb") as fh:
-            fh.write(data)
-        total += len(data)
-        kept.append(name)
-        print("  %-26s %6.1f KB  %s %d" % (name, len(data) / 1024.0, family, weight))
+    kept, total, ranges = [], 0, []
+    for family, prefix, files in plan(css):
+        for name, href, weight in files:
+            target = os.path.join(FONT_DIR, name)
+            if listing_only:
+                print("  would fetch %-24s (%s)" % (name, family))
+                continue
+            data = get(href, binary=True)
+            with open(target, "wb") as fh:
+                fh.write(data)
+            total += len(data)
+            kept.append(name)
+            print("  %-24s %6.1f KB  %s" % (name, len(data) / 1024.0, family))
+            if name.endswith("-var.woff2"):
+                ranges.append((prefix, family, weight))
 
     if listing_only:
         return 0
 
     print("\n%d files, %.0f KB total" % (len(kept), total / 1024.0))
+    for prefix, family, hi in ranges:
+        print("  declare %s once with `font-weight: 400 %d;` in css/style.css"
+              % (family, hi))
     stale = [f for f in sorted(os.listdir(FONT_DIR))
              if f.lower().endswith(".woff2") and f not in kept]
     if stale:
-        print("not part of this type system (delete if unused):", ", ".join(stale))
-    print("now point the @font-face rules in css/style.css at fonts/" +
-          ", fonts/".join(sorted(kept)))
+        print("no longer part of this type system:", ", ".join(stale))
     return 0
 
 

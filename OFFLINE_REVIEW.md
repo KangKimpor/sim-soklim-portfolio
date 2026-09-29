@@ -10,7 +10,9 @@ recruiter. This page explains how to prove that, and what to expect.
 
 * **No CDN, no external fonts, no analytics, no trackers, no web fonts.** Three
   type families ship as `.woff2` files in `fonts/` (Archivo, Source Serif 4 and
-  DM Mono, 231 KB in total) and are declared with local `@font-face` rules.
+  DM Mono — 4 files, 113 KB in total) and are declared with local `@font-face`
+  rules. Archivo and Source Serif 4 are variable faces, so one file each covers
+  every weight the page uses.
   `tools/fetch_fonts.py` is the only tool that ever uses the network, and it is
   not part of the review path.
 * **Icons are an inline SVG sprite.** `index.html` defines seven `<symbol>`
