@@ -1,0 +1,29 @@
+# Vercel project link (created by `vercel link` / `vercel deploy`)
+.vercel/
+
+# The unredacted CV, with the referees' direct numbers and the covering letter.
+# Kept locally for your records; assets/Sim-Soklim-CV.pdf is the public copy
+# that tools/make_public_cv.py produces from it.
+assets/Sim-Soklim-CV-original.pdf
+
+# Node tooling artefacts, if anyone runs the Vercel CLI in here
+node_modules/
+package-lock.json
+
+# Python bytecode from the tools
+__pycache__/
+*.py[cod]
+
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / OS noise
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
