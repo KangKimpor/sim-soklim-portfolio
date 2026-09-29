@@ -18,6 +18,13 @@ end of the last line on that page is removed, so the AutoCAD/DCD training that
 sits directly above it survives and the published PDF still matches what the
 website claims.
 
+The source is the unredacted original, which is deliberately git-ignored. It must
+not be changed to point at the public copy: once the references are gone there
+is no "References" heading left to find, so a second run would fail rather than
+silently ship something different. Regenerate with:
+
+    python tools/make_public_cv.py
+
 The original file is never modified.
 
 Usage:
@@ -36,7 +43,12 @@ except ImportError:  # older PyMuPDF releases expose the module as fitz
     import fitz as pymupdf
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SOURCE = os.path.join(ROOT, "assets", "Sim-Soklim-CV.pdf")
+
+# The unredacted original. Not the published file next to it: the "References"
+# heading this script looks for only exists in the original, so re-running
+# against assets/Sim-Soklim-CV.pdf would fail instead of quietly producing a
+# different result.
+SOURCE = os.path.join(ROOT, "assets", "Sim-Soklim-CV-original.pdf")
 
 # Text that must not survive into the published file.
 FORBIDDEN = [
