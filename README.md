@@ -282,6 +282,19 @@ call the `.cmd` shim directly or relax the policy:
 & "$env:APPDATA\npm\vercel.cmd" --prod
 ```
 
+### Vercel, through the Vercel MCP server
+
+A `vercel` MCP server is registered in Cline's settings at
+`https://mcp.vercel.com`. It stays inert until OAuth is completed: while
+`authorizationRequired` is true in `cline_mcp_settings.json`, the server
+exposes no tools to the agent, so a deploy cannot be driven from chat. Finish
+it once in the MCP panel (Authorize / Connect, which opens Vercel in a
+browser), after which the deployment tools become available and `vercel.json`
+in this repo is picked up unchanged.
+
+Note that all three routes need a human at a browser exactly once. That is
+Vercel's design: none of them will hand an agent a working token unattended.
+
 ### Anything else
 
 Upload the folder as-is: GitHub Pages, Cloudflare Pages, Netlify, S3 + CloudFront
