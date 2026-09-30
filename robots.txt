@@ -1,0 +1,7 @@
+# Sim Soklim, Civil Engineer - Project Control
+# This is a public single-page portfolio, so everything may be crawled.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://sim-soklim-portfolio-orpin.vercel.app/sitemap.xml

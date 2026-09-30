@@ -30,6 +30,9 @@ Requirements: a current Chrome, Edge, Firefox or Safari. Nothing else.
 
 ```
 index.html                 the entire site (semantic, single page)
+favicon.svg                the brand-mark as an icon; no external font
+robots.txt                 crawl permission plus the sitemap URL
+sitemap.xml                one URL, the stable production alias
 css/style.css              design tokens + all layout and component styles
 js/script.js               drawer nav, scroll-spy, scroll progress, portrait fallback, footer year
 fonts/                     4 self-hosted .woff2 files (3 families, 113 KB)
@@ -40,11 +43,12 @@ images/
   portrait.jpg             portrait source extracted from the CV
   portrait.png             portrait source
   portrait-cutout.png      cutout with transparency (source of the .webp)
-  _portrait-preview.png    QA artefact: cutout composited on navy, never served
+  _portrait-preview.png    QA artefact: cutout composited on navy, excluded by .vercelignore
 assets/Sim-Soklim-CV.pdf   the curriculum vitae, offered as a download
 tools/
   _validate.py             structural, offline, token and content checks
-  fetch_fonts.py           re-vendors the typefaces (the only network-touching tool)
+  _validate_live.py        the same checks against a deployed URL (uses the network)
+  fetch_fonts.py           re-vendors the typefaces (network-touching)
   cutout.py                rebuilds the portrait cutout from images/portrait.jpg
   optimize_images.py       re-encodes gallery photos / hero (no galleries in this build)
 README.md  OFFLINE_REVIEW.md  REVIEW_CHECKLIST.md
@@ -200,10 +204,15 @@ deleting the marker is a one-line change in `index.html`.
 ## 6. Re-running the tools
 
 ```bash
-# structural, offline, design-token and content checks
+# structural, offline, design-token, content, share-card and payload checks
 python tools/_validate.py
 
-# re-vendor the typefaces (the only tool that needs the network)
+# the same checks against the deployed URL: headers, served files, and proof
+# that the review-only paths are not reachable
+python tools/_validate_live.py
+python tools/_validate_live.py --url https://example.pages.dev
+
+# re-vendor the typefaces (one of the two tools that need the network)
 python tools/fetch_fonts.py
 python tools/fetch_fonts.py --list     # show the faces without downloading
 
@@ -215,8 +224,10 @@ python tools/optimize_images.py
 ```
 
 `cutout.py` needs `Pillow` and `numpy`; `optimize_images.py` needs `Pillow`.
-Neither is required to view the site, and the fonts are already vendored, so
-**nothing in the review path touches the network**.
+`_validate_live.py` uses only the standard library, but it is the one validator
+that opens a socket by design. Neither it nor `fetch_fonts.py` is required to
+view the site, and the fonts are already vendored, so **nothing in the review
+path touches the network**.
 
 ---
 
@@ -295,12 +306,39 @@ in this repo is picked up unchanged.
 Note that all three routes need a human at a browser exactly once. That is
 Vercel's design: none of them will hand an agent a working token unattended.
 
+### What the deployment is allowed to serve
+
+Vercel uploads the **working directory**, not the git tree, so `.gitignore` has
+no effect on what a deployment exposes. `.vercelignore` in the repo root is what
+decides that, and it keeps the QA preview, the portrait sources, the tools and
+the review `.md` files off the public URL while leaving them in git, where they
+are still needed to reproduce the build.
+
+That distinction bit this project once: the first deploy served
+`images/_portrait-preview.png`, which section 2 describes as "never served",
+because the file was tracked by git and nothing else excluded it.
+`tools/_validate_live.py` is the regression test.
+
+The two stable production URLs are:
+
+```
+https://sim-soklim-portfolio-orpin.vercel.app
+https://sim-soklim-portfolio-kimporkang01-3264s-projects.vercel.app
+```
+
+`og:url`, `<link rel="canonical">`, `robots.txt` and `sitemap.xml` all name the
+first one. The per-deployment URL
+(`sim-soklim-portfolio-<hash>-kimporkang01-3264s-projects.vercel.app`) carries a
+fresh hash on every build and must never be used for any of them.
+
 ### Anything else
 
 Upload the folder as-is: GitHub Pages, Cloudflare Pages, Netlify, S3 + CloudFront
-or a shared-hosting `public_html`. The only thing to change for a canonical
-domain is `og:url` / `twitter:url` in `index.html`, which this build
-deliberately omits.
+or a shared-hosting `public_html`. Two things to change for a different host:
+`og:url`, `<link rel="canonical">` and the sitemap entry must name the new
+domain, and `.vercelignore` is a Vercel-only file, so an equivalent exclusion
+mechanism is needed if the host would otherwise publish the whole folder.
+`tools/_validate_live.py --url https://your-domain` checks the result.
 
 ### Before the first public deploy
 
@@ -310,5 +348,7 @@ deliberately omits.
   numbers cannot be served
 * Replace the placeholder photography (section 5), or obtain written permission
   for the images currently in place
+* After deploying, `python tools/_validate_live.py` → `RESULT: ALL OK`, which is
+  what proves the headers are applied and the review-only paths return 404
 
 

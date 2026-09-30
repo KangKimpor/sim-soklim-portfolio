@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The brand-mark from the top bar, as a standalone file: navy tile, paper
+     monogram. No external font or image, so the strict Content-Security-Policy
+     in vercel.json serves it without an exception. Regenerate alongside the
+     palette in css/style.css if the navy ever changes. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="Sim Soklim">
+  <rect width="32" height="32" rx="6" ry="6" fill="#16243a"/>
+  <text x="16" y="16" fill="#f4f3f0" font-family="DM Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5" font-weight="500" letter-spacing="0.5" text-anchor="middle" dominant-baseline="central">SS</text>
+</svg>

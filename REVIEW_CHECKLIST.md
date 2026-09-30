@@ -162,7 +162,12 @@ Setup instructions are in README section 8.
       browser console
 - [ ] `/assets/Sim-Soklim-CV.pdf` downloads, is 5 pages, and has no References block
 - [ ] Placeholder photography replaced, or written permission recorded
-- [ ] `og:url` / `twitter:url` added once the production domain is known
+- [x] `og:url` / `twitter:url` added once the production domain is known —
+      `https://sim-soklim-portfolio-orpin.vercel.app`, now also the canonical URL
+      and the sitemap entry. `twitter:url` is not a tag Twitter reads; the
+      equivalent is `twitter:card`, which is present.
+- [ ] `python tools/_validate_live.py` → `RESULT: ALL OK`, including the
+      `[review-only paths must not be reachable]` group
 - [ ] Privacy of the repository itself: it is **public**, so anyone can read the
       full commit history — confirm that is intended
 
@@ -187,4 +192,22 @@ Setup instructions are in README section 8.
 3. Forced-colours / high-contrast mode has not been signed off.
 4. Section 05 is not in the navigation, by design; add a nav link when it is
    published.
+
+### Resolved since the first deploy
+
+* The deploy no longer publishes the review-only files. Vercel uploads the
+  working directory rather than the git tree, so `images/_portrait-preview.png`
+  and the portrait sources were readable at the public URL despite being
+  described as "never served". `.vercelignore` now excludes them, and
+  `tools/_validate_live.py` fails if that regresses.
+* The share card is absolute and 1200 x 630. `og:image` was a relative path,
+  which Facebook, LinkedIn and Twitter do not resolve, so every share produced
+  a card with no image. `_validate.py` now asserts the absolute URLs and reads
+  the real JPEG dimensions, so a swapped card cannot drift from the declared
+  1200 x 630.
+* `/favicon.ico` returned 404. `favicon.svg` carries the top-bar brand-mark.
+* `robots.txt` and `sitemap.xml` did not exist.
+* Deployment protection is off. Vercel applies its "Secure" default
+  (`ssoProtection: all_except_custom_domains`) to a new project, which served a
+  login wall to every visitor; a `Ready` build is not proof the site is public.
 

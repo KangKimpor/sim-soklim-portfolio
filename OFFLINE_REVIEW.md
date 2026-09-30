@@ -13,8 +13,8 @@ recruiter. This page explains how to prove that, and what to expect.
   DM Mono — 4 files, 113 KB in total) and are declared with local `@font-face`
   rules. Archivo and Source Serif 4 are variable faces, so one file each covers
   every weight the page uses.
-  `tools/fetch_fonts.py` is the only tool that ever uses the network, and it is
-  not part of the review path.
+  `tools/fetch_fonts.py` and `tools/_validate_live.py` are the only tools that
+  ever use the network, and neither is part of the review path.
 * **Icons are an inline SVG sprite.** `index.html` defines seven `<symbol>`
   elements (`ico-arrow-down`, `ico-close`, `ico-mail`, `ico-phone`,
   `ico-linkedin`, `ico-download`, `ico-pin`) and reuses them with `<use>`, so

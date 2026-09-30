@@ -15,14 +15,19 @@ and must work with no network access at all, so this script verifies:
   * every id/selector js/script.js queries is present in the markup
   * the CV facts published on the page are present and retired values are gone
   * the references section stays commented out until referee consent is given
+  * the share card is absolute and 1200x630, and .vercelignore still hides the
+    review-only files from the deploy
 
 Exit code is non-zero when a check fails, so it can gate a manual review.
 """
 import os
 import re
+import struct
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+CANONICAL = "https://sim-soklim-portfolio-orpin.vercel.app"
 
 REQUIRED_FILES = [
     "index.html",
@@ -32,6 +37,22 @@ REQUIRED_FILES = [
     "images/og-hero.jpg",
     "images/portrait-cutout.webp",
     "assets/Sim-Soklim-CV.pdf",
+    "favicon.svg",
+    "robots.txt",
+    "sitemap.xml",
+]
+
+# Paths that the deployment must NOT expose. `.vercelignore` is what enforces
+# this at deploy time; tools/_validate_live.py asserts the same thing against a
+# running URL, and the list is restated here so a careless edit to
+# .vercelignore is caught before a deploy rather than after one.
+IGNORED_PATHS = [
+    "tools/",
+    "images/_portrait-preview.png",
+    "images/portrait.jpg",
+    "images/portrait.png",
+    "images/portrait-cutout.png",
+    "assets/Sim-Soklim-CV-original.pdf",
 ]
 
 SECTIONS = [
@@ -164,6 +185,10 @@ def check_no_network(html, css):
     print("[offline]")
     remote = re.findall(r'src="(https?://[^"]+)"', html)
     for tag in re.findall(r"<link\b[^>]*>", html):
+        if re.search(r'rel="canonical"', tag):
+            # A canonical URL is metadata for crawlers, never fetched by the
+            # browser, so it costs nothing against the offline promise.
+            continue
         found = re.search(r'href="(https?://[^"]+)"', tag)
         if found:
             remote.append(found.group(1))
@@ -304,10 +329,114 @@ def check_csp(html):
         fail("<style> block present: the policy would block it")
 
     for pattern, why in ((r'src="https?://', "remote src"),
-                         (r'<link\b(?![^>]*rel="(?:preconnect|dns-prefetch)")[^>]*href="https?://', "remote link")):
+                         (r'<link\b(?![^>]*rel="(?:preconnect|dns-prefetch|canonical)")[^>]*href="https?://', "remote link")):
         if re.search(pattern, html):
             fail("%s: blocked by the policy's default-src 'self'" % why)
     ok("policy allows exactly what the page requests")
+
+
+def _jpeg_size(path):
+    """Width and height of a baseline JPEG, read from the SOF marker."""
+    with open(path, "rb") as fh:
+        data = fh.read()
+    if data[:2] != b"\xff\xd8":
+        return None
+    i = 2
+    while i < len(data) - 9:
+        if data[i] != 0xFF:
+            i += 1
+            continue
+        marker = data[i + 1]
+        if marker in (0xC0, 0xC1, 0xC2, 0xC3):
+            height, width = struct.unpack(">HH", data[i + 5:i + 9])
+            return width, height
+        i += 2 + struct.unpack(">H", data[i + 2:i + 4])[0]
+    return None
+
+
+def check_share_metadata(html):
+    """A link preview is built from absolute URLs and a 1200x630 card.
+
+    Facebook, LinkedIn and Twitter do not resolve a relative og:image, so a
+    relative path here fails silently: the page is fine, the shared card has no
+    image. These assertions are the only thing that catches it.
+    """
+    print("[share metadata]")
+
+    favicon = re.search(r'<link\b[^>]*rel="icon"[^>]*>', html)
+    if not favicon:
+        fail("no favicon <link rel=\"icon\">: /favicon.ico falls back to a 404")
+    else:
+        ok("favicon declared")
+
+    canonical = re.search(r'<link\b[^>]*rel="canonical"[^>]*href="([^"]+)"', html)
+    if not canonical:
+        fail("no <link rel=\"canonical\">")
+    elif canonical.group(1) != CANONICAL + "/":
+        fail("canonical is %s, expected %s/" % (canonical.group(1), CANONICAL))
+    else:
+        ok("canonical points at the stable production alias")
+
+    for prop, expect in (("og:url", CANONICAL + "/"),
+                         ("og:image", CANONICAL + "/images/og-hero.jpg"),
+                         ("og:image:width", "1200"),
+                         ("og:image:height", "630")):
+        found = re.search(r'<meta\b[^>]*property="%s"[^>]*content="([^"]*)"' % re.escape(prop), html)
+        if not found:
+            fail("missing meta property: " + prop)
+        elif found.group(1) != expect:
+            fail("%s is %r, expected %r" % (prop, found.group(1), expect))
+
+    for name, expect in (("twitter:card", "summary_large_image"),
+                         ("twitter:image", CANONICAL + "/images/og-hero.jpg"),
+                         ("twitter:title", None),
+                         ("twitter:description", None)):
+        found = re.search(r'<meta\b[^>]*name="%s"[^>]*content="([^"]*)"' % re.escape(name), html)
+        if not found:
+            fail("missing meta name: " + name)
+        elif expect is not None and found.group(1) != expect:
+            fail("%s is %r, expected %r" % (name, found.group(1), expect))
+
+    for prop in ("og:image", "twitter:image"):
+        found = re.search(r'<meta\b[^>]*(?:property|name)="%s"[^>]*content="([^"]*)"' % re.escape(prop), html)
+        if found and not found.group(1).startswith("https://"):
+            fail("%s must be absolute, crawlers do not resolve a relative URL" % prop)
+    ok("social metadata is absolute and consistent")
+
+    size = _jpeg_size(os.path.join(ROOT, "images/og-hero.jpg"))
+    if size != (1200, 630):
+        fail("images/og-hero.jpg is %s, the declared card is 1200x630" % (size,))
+    else:
+        ok("images/og-hero.jpg is really 1200x630")
+
+
+def check_vercelignore():
+    """The deploy is uploaded from disk, not from git, so .vercelignore decides
+    what the public URL exposes. A missing line here quietly publishes the QA
+    preview, the portrait sources or the unredacted CV."""
+    print("[deployment payload]")
+    path = os.path.join(ROOT, ".vercelignore")
+    if not os.path.isfile(path):
+        fail("no .vercelignore: the full working directory would be uploaded")
+        return
+    with open(path, encoding="utf-8") as fh:
+        body = fh.read()
+    lines = {ln.strip() for ln in body.splitlines()}
+
+    for entry in IGNORED_PATHS:
+        if entry not in lines:
+            fail(".vercelignore does not exclude: " + entry)
+    ok("%d review-only paths excluded from the upload" % len(IGNORED_PATHS))
+
+    if "vercel.json" in lines:
+        fail(".vercelignore excludes vercel.json, which would disable the headers")
+    else:
+        ok("vercel.json still reaches the build, so the headers apply")
+
+    for served in ("favicon.svg", "robots.txt", "sitemap.xml"):
+        if served in lines:
+            fail(".vercelignore excludes %s, which the site must serve" % served)
+    ok("the files the site serves are not excluded")
 
 
 def main():
@@ -323,6 +452,8 @@ def main():
     check_tokens(css)
     check_javascript(html)
     check_content(html)
+    check_share_metadata(html)
+    check_vercelignore()
 
     print("")
     if problems:
