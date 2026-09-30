@@ -168,6 +168,10 @@ Setup instructions are in README section 8.
       equivalent is `twitter:card`, which is present.
 - [ ] `python tools/_validate_live.py` → `RESULT: ALL OK`, including the
       `[review-only paths must not be reachable]` group
+- [ ] `vercel git connect` succeeds, so a push to `main` redeploys. It currently
+      fails with `You need to add a Login Connection to your GitHub account
+      first. (400)`; README section 8 has the one-off browser step. Until it is
+      done, every deploy is a manual `vercel deploy --prod`.
 - [ ] Privacy of the repository itself: it is **public**, so anyone can read the
       full commit history — confirm that is intended
 

@@ -293,6 +293,40 @@ call the `.cmd` shim directly or relax the policy:
 & "$env:APPDATA\npm\vercel.cmd" --prod
 ```
 
+A CLI deploy like this is a one-off snapshot; it does **not** subscribe the
+project to `main`, so nothing redeploys until `git connect` succeeds.
+
+### Making pushes redeploy automatically
+
+```bash
+vercel git connect https://github.com/KangKimpor/sim-soklim-portfolio.git
+```
+
+This currently fails with:
+
+```
+Error: Failed to link KangKimpor/sim-soklim-portfolio.
+You need to add a Login Connection to your GitHub account first. (400)
+```
+
+Vercel will not link a repository until the **Vercel account** has a GitHub
+login connection, which is an OAuth round-trip and therefore a human at a
+browser, exactly once:
+
+1. Sign in at <https://vercel.com> with the `kimporkang01-3264` account.
+2. **Account Settings → Login Connections → GitHub → Connect**.
+3. Re-run `vercel git connect` above.
+
+Connect the **existing** project this way rather than importing the repository
+as a new one. An import creates a second project, which would not inherit the
+`sim-soklim-portfolio-orpin.vercel.app` alias, the cleared deployment
+protection or the settings described in this section. The inspect command is
+the quickest way to confirm the link took:
+
+```bash
+vercel project inspect      # look for a Git Repository row
+```
+
 ### Vercel, through the Vercel MCP server
 
 A `vercel` MCP server is registered in Cline's settings at
