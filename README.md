@@ -30,7 +30,7 @@ Requirements: a current Chrome, Edge, Firefox or Safari. Nothing else.
 
 ```
 index.html                 the entire site (semantic, single page)
-favicon.svg                the brand-mark as an icon; no external font
+favicon.svg                the brand-mark as an icon; no external font request
 robots.txt                 crawl permission plus the sitemap URL
 sitemap.xml                one URL, the stable production alias
 css/style.css              design tokens + all layout and component styles
@@ -54,7 +54,7 @@ tools/
 README.md  OFFLINE_REVIEW.md  REVIEW_CHECKLIST.md
 ```
 
-Total on disk is well under 1 MB of images and fonts plus the 180 KB CV.
+Total on disk is well under 1 MB of images and fonts plus the 190 KB CV.
 
 ---
 
@@ -111,9 +111,11 @@ Numbers in the mono and data roles carry `font-variant-numeric: tabular-nums`,
 so dates, reference numbers and phone numbers line up in columns.
 
 Animation is limited to a staggered hero reveal, a hero hairline that draws
-itself, the status beacon, and a scroll-driven reveal for section heads and
-registers — all suppressed under `prefers-reduced-motion` and the scroll-driven
-part guarded by `@supports (animation-timeline: view())`.
+itself, the status beacon, a small lift on hover, and a scroll-driven reveal for
+section heads and registers. The reveals and the hover lifts sit behind
+`prefers-reduced-motion: no-preference`, `prefers-reduced-motion: reduce` stops
+the beacon, the lifts and smooth scrolling, and the scroll-driven part is
+guarded by `@supports (animation-timeline: view())`.
 
 ### Print
 
@@ -125,9 +127,12 @@ instead of a screenshot of a website.
 
 ### JavaScript behaviour (all progressive enhancement)
 
-* Mobile drawer: opens from the burger, moves focus to the close button, closes
-  on backdrop click, link click or `Escape`; the closed panel is `inert`, so its
-  links are unreachable by keyboard and screen reader.
+* Mobile drawer: a `role="dialog"`, `aria-modal` panel that opens from the
+  burger and moves focus to the close button. `Tab` and `Shift+Tab` stay inside
+  it while it is open; `Escape`, the backdrop and the close button return focus
+  to the burger, while following a link hands focus to the target section
+  instead. The closed panel is `inert` and `aria-hidden`, so its links are
+  unreachable by keyboard and screen reader.
 * Scroll-spy: an `IntersectionObserver` marks the matching nav item `is-active`.
 * Scroll progress: a 2 px copper rule under the top bar fills with reading
   progress, throttled through `requestAnimationFrame`.
@@ -168,9 +173,14 @@ are transcribed from that document. Editorial changes are limited to:
   certification, so soften that phrase if he prefers.
 
 **References are intentionally not published.** Section 05 sits inside an HTML
-comment and contains all five referees from the CV. To publish it, delete the
-`<!--` and `-->` around that block. `tools/_validate.py` fails while the section
-is visible, so it cannot be published by accident.
+comment and contains all five referees from the CV. To publish it, remove the
+comment markers around that block and add the matching `#references` link to the
+navigation. Nothing inside the comment may spell out `<!--` or `-->`: a nested
+terminator closes the comment early, and the rest of it then parses as real
+markup, which is exactly how the referee names and numbers were briefly live.
+`tools/_validate.py` fails while the section renders outside a comment, while a
+withheld name or number reaches the rendered markup, and while any block comment
+is closed early, so it cannot be published by accident.
 
 **The downloadable CV is redacted to match.** The supplied PDF also carries
 those five direct numbers, so shipping it as-is would undo the page's own
@@ -384,5 +394,3 @@ mechanism is needed if the host would otherwise publish the whole folder.
   for the images currently in place
 * After deploying, `python tools/_validate_live.py` → `RESULT: ALL OK`, which is
   what proves the headers are applied and the review-only paths return 404
-
-

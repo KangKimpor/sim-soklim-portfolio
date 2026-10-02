@@ -7,7 +7,10 @@
   var navClose = document.getElementById('navClose');
   var navBackdrop = document.getElementById('navBackdrop');
 
-  function setMenu(open) {
+  // `restoreFocus` is false only when the panel closes because a link inside it
+  // was followed: the browser moves the sequential focus point to the target
+  // section, so pulling focus back up to the burger would undo that.
+  function setMenu(open, restoreFocus) {
     if (!navPanel || !navToggle) { return; }
     navPanel.classList.toggle('is-open', open);
     navPanel.setAttribute('aria-hidden', open ? 'false' : 'true');
@@ -27,29 +30,49 @@
 
     if (open && navClose) {
       navClose.focus();
-    } else if (!open && navToggle) {
+    } else if (!open && restoreFocus && navToggle) {
       navToggle.focus();
     }
   }
 
-  function closeMenu() {
-    setMenu(false);
-  }
-
   if (navToggle && navPanel) {
     navToggle.addEventListener('click', function () {
-      setMenu(!navPanel.classList.contains('is-open'));
+      setMenu(!navPanel.classList.contains('is-open'), true);
     });
-    if (navClose) { navClose.addEventListener('click', closeMenu); }
-    if (navBackdrop) { navBackdrop.addEventListener('click', closeMenu); }
+    if (navClose) {
+      navClose.addEventListener('click', function () { setMenu(false, true); });
+    }
+    if (navBackdrop) {
+      navBackdrop.addEventListener('click', function () { setMenu(false, true); });
+    }
 
     navPanel.addEventListener('click', function (e) {
-      if (e.target.closest('a')) { closeMenu(); }
+      if (e.target.closest('a')) { setMenu(false, false); }
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && navPanel.classList.contains('is-open')) {
-        closeMenu();
+      if (!navPanel.classList.contains('is-open')) { return; }
+
+      if (e.key === 'Escape') {
+        setMenu(false, true);
+        return;
+      }
+
+      // Trap Tab in the open panel: the page behind it is still focusable, so
+      // without this the browser would tab into content the drawer covers.
+      if (e.key !== 'Tab') { return; }
+      var focusables = navPanel.querySelectorAll('a[href], button:not([disabled])');
+      if (!focusables.length) { return; }
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      var active = document.activeElement;
+
+      if (e.shiftKey && (active === first || !navPanel.contains(active))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (active === last || !navPanel.contains(active))) {
+        e.preventDefault();
+        first.focus();
       }
     });
   }

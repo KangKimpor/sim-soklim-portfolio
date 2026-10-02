@@ -14,7 +14,9 @@ and must work with no network access at all, so this script verifies:
   * every var(--token) used in the CSS is declared in :root
   * every id/selector js/script.js queries is present in the markup
   * the CV facts published on the page are present and retired values are gone
-  * the references section stays commented out until referee consent is given
+  * the references section stays commented out until referee consent is given:
+    its referee details stay out of the rendered markup, and no block comment
+    is closed early by a nested <!-- or --> of its own
   * the share card is absolute and 1200x630, and .vercelignore still hides the
     review-only files from the deploy
 
@@ -93,6 +95,23 @@ FORBIDDEN_TEXT = [
     "Tang Hao",
     "Meng Lin",
     "VET Charging Station",
+]
+
+# Referee details live in the commented-out section on purpose: they may only be
+# published once the client gives written consent. They must never appear in the
+# markup a browser renders, which is a different check from FORBIDDEN_TEXT above
+# (that one scans the whole file, comments included).
+WITHHELD_TEXT = [
+    "Pich Rathy",
+    "Richard Abas Lorbes",
+    "Ryan Koh",
+    "Sam Sithih",
+    "Hok YekSrun",
+    "+855 11 651 168",
+    "+855 96 956 7510",
+    "+855 69 840 234",
+    "+855 16 229 666",
+    "+855 93 878 818",
 ]
 
 # A class selector is ".name" not preceded by a word character, quote or slash,
@@ -299,8 +318,18 @@ def check_content(html):
             fail("retired value still present: " + text)
     ok("%d CV facts present, no retired values" % len(REQUIRED_TEXT))
 
-    if '<section class="section section-alt" id="references">' in visible:
+    for text in WITHHELD_TEXT:
+        if text in visible:
+            fail("referee detail is published without consent: " + text)
+
+    # A nested <!-- or --> inside a block comment closes it early: the rest of
+    # the comment then parses as real markup, which is how the withheld referee
+    # section once reached the page. Class-agnostic on purpose, since matching
+    # the section tag by its exact class attribute is what let that slip past.
+    if re.search(r'<section[^>]*\sid="references"', visible):
         fail("the references section is published; keep it commented out until consent")
+    elif "-->" in visible or "<!--" in visible:
+        fail("a block comment is closed early by a nested <!-- or --> inside it")
     elif 'id="references"' in html:
         ok("references section present but commented out")
     else:
@@ -465,4 +494,3 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
-

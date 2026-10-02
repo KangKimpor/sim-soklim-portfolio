@@ -92,7 +92,9 @@ Breakpoints in use: 480 / 560 / 720 / 900 / 1180 px.
 ## 6. Interaction
 
 - [ ] Burger opens the drawer; focus moves into the panel; `Escape` closes it
-- [ ] Closing the drawer returns focus to the burger button
+- [ ] `Tab` and `Shift+Tab` stay inside the open panel (it is a focus trap)
+- [ ] Closing with `Escape`, the close button or the backdrop returns focus to
+      the burger; following a link leaves focus at the target section instead
 - [ ] Closed drawer links are not reachable with Tab (inert / off-canvas)
 - [ ] Drawer closes when a link is tapped and when the backdrop is tapped
 - [ ] The active nav item tracks the section being read (scroll-spy)
@@ -215,3 +217,38 @@ Setup instructions are in README section 8.
   (`ssoProtection: all_except_custom_domains`) to a new project, which served a
   login wall to every visitor; a `Ready` build is not proof the site is public.
 
+### Refinements in this revision
+
+* `prefers-reduced-motion: reduce` is implemented rather than only documented:
+  the beacon pulse, the hero reveal, the hover lifts and smooth scrolling all
+  stop. The section 7 item about reduced motion now passes.
+* The drawer is a `role="dialog"` panel with `aria-modal`, an `aria-haspopup`
+  burger and a `Tab` trap, and it no longer pulls focus back to the burger when
+  a link inside it is followed.
+* The status-pill borders now carry the `rgba()` fallback the offline guide
+  describes, so a browser without `color-mix()` keeps the border rather than
+  losing it.
+* `theme-color` and the translucent top bar are exactly `--paper` (`#f4f3f0`);
+  both were a channel off, which was invisible but wrong.
+* `scrollbar-gutter: stable` stops the layout shifting sideways when the drawer
+  locks the page, `overscroll-behavior: contain` keeps a flick inside the panel,
+  and the `#main` skip-link target gets the same anchor clearance as a section.
+* De-duplicated CSS: `.back-to-top` no longer repeats the footer link rules, and
+  its arrow is a real icon. Whitespace normalised to single blank lines with no
+  blank line at end of file.
+* Section 05 is really held back now. The note inside the comment spelled out
+  `<!--` and `-->`, which closed the comment on that line: the five referee
+  names and numbers, plus two lines of the note itself, rendered as live page
+  content, and one unbreakable line of `=` in the escaped text pushed the
+  document 314 px wider than the viewport at every width. The note no longer
+  contains a terminator.
+* `tools/_validate.py` could not have caught it: the check matched the exact
+  string `<section class="section section-alt" id="references">` while the
+  markup says `class="section"`, so the branch could never fire and the file
+  reported "references section present but commented out" either way. It is now
+  class-agnostic, fails on any early-closed block comment, and fails if a
+  withheld referee name or number reaches the rendered markup (`WITHHELD_TEXT`).
+  Both failures were reproduced against the old markup before the fix.
+* Documentation figures corrected: the offline guide said 0.47 MB for a first
+  load (0.35 MB measured), 180 KB for the CV (190 KB), and "seven shipped" fonts
+  (four).

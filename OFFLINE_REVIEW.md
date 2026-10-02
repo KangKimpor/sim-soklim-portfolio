@@ -15,10 +15,10 @@ recruiter. This page explains how to prove that, and what to expect.
   every weight the page uses.
   `tools/fetch_fonts.py` and `tools/_validate_live.py` are the only tools that
   ever use the network, and neither is part of the review path.
-* **Icons are an inline SVG sprite.** `index.html` defines seven `<symbol>`
-  elements (`ico-arrow-down`, `ico-close`, `ico-mail`, `ico-phone`,
-  `ico-linkedin`, `ico-download`, `ico-pin`) and reuses them with `<use>`, so
-  there is no icon font or SVG request.
+* **Icons are an inline SVG sprite.** `index.html` defines eight `<symbol>`
+  elements (`ico-arrow-down`, `ico-arrow-up`, `ico-close`, `ico-mail`,
+  `ico-phone`, `ico-linkedin`, `ico-download`, `ico-pin`) and reuses them with
+  `<use>`, so there is no icon font or SVG request.
 * **The paper grain is an inline SVG data URI** in `css/style.css`, so the
   texture costs no request either.
 * **The CV is a local file** (`assets/Sim-Soklim-CV.pdf`) and downloads with a
@@ -67,19 +67,20 @@ non-ASCII characters, so extraction on Windows, macOS or Linux is safe.
 1. Open DevTools (`F12`) → **Network**.
 2. Tick **Preserve log**, then reload.
 3. Every entry must be a relative path, and the list is limited to:
-   `index.html`, `css/style.css`, `js/script.js`, `images/hero.webp`,
-   `images/portrait-cutout.webp`, and the `fonts/*.woff2` files for the weights
-   the page actually renders (a subset of the seven shipped). There is nothing
-   else: no third-party origin, no font CDN, no tracking pixel.
+   `index.html`, `css/style.css`, `js/script.js`, `favicon.svg`,
+   `images/hero.webp`, `images/portrait-cutout.webp`, and the `fonts/*.woff2`
+   files the page actually renders (a subset of the four shipped). There is
+   nothing else: no third-party origin, no font CDN, no tracking pixel.
 4. Filter by **Fetch/XHR** and **WS**: both must be empty. The script makes no
    `fetch`, `XMLHttpRequest` or WebSocket calls.
 5. The **Security** or **Application → Storage** panel should show no cookies,
    no localStorage and no service-worker registration.
 
-Fonts load per weight, so a page that never shows Archivo 700 will not request
-that file; that is expected and still entirely local. A full first load
-(HTML + CSS + JS + images + every font) is roughly 0.47 MB, plus 180 KB if the
-CV is downloaded.
+Archivo and Source Serif 4 are single variable files, so one request each covers
+every weight the page asks for; the two DM Mono cuts load only where a 400 or a
+500 label is painted. All of that is expected and still entirely local. A full
+first load (HTML + CSS + JS + images + favicon + every font) is about 350 KB
+(0.35 MB), plus 190 KB if the CV is downloaded.
 
 ---
 
@@ -108,10 +109,14 @@ CV is downloaded.
 * `mask-image` behind the hero grid and `mix-blend-mode: multiply` for the paper
   grain are both progressive: without them the page is a flat paper colour, and
   the grain does not affect legibility.
-* `prefers-reduced-motion: reduce` disables the beacon pulse, the hero reveal
-  and smooth scrolling.
+* `prefers-reduced-motion: reduce` switches off the beacon pulse, the hero
+  reveal, the hover lifts and smooth scrolling.
 * `inert` on the closed drawer is honoured by all current browsers; where it is
-  unsupported the drawer is still `aria-hidden` and off-canvas.
+  unsupported the drawer is still `aria-hidden` and off-canvas. The open panel
+  is a `role="dialog"` with `aria-modal` and its own `Tab` trap, so keyboard
+  focus stays in the panel whether or not `inert` is supported.
+* `scrollbar-gutter: stable` keeps the page from shifting sideways when the
+  drawer locks scrolling behind it.
 * Windows high contrast / forced-colours mode is not yet signed off — see
   `REVIEW_CHECKLIST.md`.
 
