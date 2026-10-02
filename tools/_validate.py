@@ -34,6 +34,7 @@ CANONICAL = "https://sim-soklim-portfolio-orpin.vercel.app"
 REQUIRED_FILES = [
     "index.html",
     "css/style.css",
+    "css/construction.css",
     "js/script.js",
     "images/hero.webp",
     "images/og-hero.jpg",
@@ -273,11 +274,11 @@ def check_classes(html, css):
 def check_tokens(css):
     print("[design tokens]")
     css_clean = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
-    root = re.search(r":root\s*\{(.*?)\n\}", css_clean, re.S)
-    if not root:
+    roots = re.findall(r":root\s*\{(.*?)\n\}", css_clean, re.S)
+    if not roots:
         fail("no :root token block found in css/style.css")
         return
-    defined = set(re.findall(r"(--[\w-]+)\s*:", root.group(1)))
+    defined = set(re.findall(r"(--[\w-]+)\s*:", "\n".join(roots)))
     declared = set(re.findall(r"(--[\w-]+)\s*:", css_clean))
     used = set(re.findall(r"var\(\s*(--[\w-]+)", css_clean))
     for name in sorted(used - declared):
@@ -471,7 +472,7 @@ def check_vercelignore():
 def main():
     print("validating " + ROOT)
     html = read("index.html")
-    css = read("css/style.css")
+    css = read("css/style.css") + "\n" + read("css/construction.css")
     check_files()
     check_assets(html)
     check_markup(html)
