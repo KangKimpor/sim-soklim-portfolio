@@ -4,4 +4,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sim-soklim-portfolio-orpin.vercel.app/sitemap.xml
+Sitemap: https://sim-soklim-portfolio.vercel.app/sitemap.xml

@@ -3,7 +3,7 @@
 
 Usage:
     python tools/_validate_live.py
-    python tools/_validate_live.py --url https://sim-soklim-portfolio-orpin.vercel.app
+    python tools/_validate_live.py --url https://sim-soklim-portfolio.vercel.app
 
 Unlike tools/_validate.py, which reads the files on disk and never opens a
 socket, this script talks to the running site. It is the only way to prove the
@@ -45,9 +45,6 @@ SERVED = [
     "/js/script.js",
     "/fonts/Archivo-var.woff2",
     "/fonts/SourceSerif4-var.woff2",
-    "/fonts/DMMono-400.woff2",
-    "/fonts/DMMono-500.woff2",
-    "/images/hero.webp",
     "/images/og-hero.jpg",
     "/images/portrait-cutout.webp",
     "/assets/Sim-Soklim-CV.pdf",
@@ -68,6 +65,10 @@ EXPECTED_HEADERS = {
 # give a false pass for tools/. These are the concrete URLs an upload of the
 # working directory would expose.
 ALSO_NOT_SERVED = [
+    "/.vercel/project.json",
+    "/.vercel/auth-firefox/auth.json",
+    "/tools/social-card.html",
+    "/tools/social-card.css",
     "/tools/_validate.py",
     "/tools/make_public_cv.py",
     "/tools/cutout.py",

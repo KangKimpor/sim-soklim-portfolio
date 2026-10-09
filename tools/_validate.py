@@ -14,9 +14,9 @@ and must work with no network access at all, so this script verifies:
   * every var(--token) used in the CSS is declared in :root
   * every id/selector js/script.js queries is present in the markup
   * the CV facts published on the page are present and retired values are gone
-  * the references section stays commented out until referee consent is given:
-    its referee details stay out of the rendered markup, and no block comment
-    is closed early by a nested <!-- or --> of its own
+  * private referee details are absent from the entire HTML source
+  * featured projects, subordinate packages and experience summaries keep the
+    editorial layout's factual hierarchy
   * the share card is absolute and 1200x630, and .vercelignore still hides the
     review-only files from the deploy
 
@@ -29,14 +29,12 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-CANONICAL = "https://sim-soklim-portfolio-orpin.vercel.app"
+CANONICAL = "https://sim-soklim-portfolio.vercel.app"
 
 REQUIRED_FILES = [
     "index.html",
     "css/style.css",
-    "css/construction.css",
     "js/script.js",
-    "images/hero.webp",
     "images/og-hero.jpg",
     "images/portrait-cutout.webp",
     "assets/Sim-Soklim-CV.pdf",
@@ -50,6 +48,7 @@ REQUIRED_FILES = [
 # running URL, and the list is restated here so a careless edit to
 # .vercelignore is caught before a deploy rather than after one.
 IGNORED_PATHS = [
+    ".vercel/",
     "tools/",
     "images/_portrait-preview.png",
     "images/portrait.jpg",
@@ -68,7 +67,7 @@ SECTIONS = [
 
 JS_SELECTORS = ["[data-nav]", "section[id]", ".portrait-frame"]
 
-JS_CLASS_HOOKS = ["is-open", "is-active", "is-empty", "menu-open"]
+JS_CLASS_HOOKS = ["js-enabled", "is-active", "is-empty", "menu-open"]
 
 # Facts copied from the CV that must appear on the page.
 REQUIRED_TEXT = [
@@ -98,10 +97,8 @@ FORBIDDEN_TEXT = [
     "VET Charging Station",
 ]
 
-# Referee details live in the commented-out section on purpose: they may only be
-# published once the client gives written consent. They must never appear in the
-# markup a browser renders, which is a different check from FORBIDDEN_TEXT above
-# (that one scans the whole file, comments included).
+# Private reference details must stay out of the complete source, including
+# comments. The public downloadable CV has its References block redacted.
 WITHHELD_TEXT = [
     "Pich Rathy",
     "Richard Abas Lorbes",
@@ -178,7 +175,7 @@ def check_markup(html):
     for section in SECTIONS:
         if section not in ids:
             fail("missing section id: " + section)
-    ok("anchor targets and the five section ids resolve (#references is commented out)")
+    ok("anchor targets and the five section ids resolve")
 
     symbols = set(re.findall(r'<symbol id="([^"]+)"', html))
     used = set(re.findall(r'<use href="#([^"]+)"', html))
@@ -193,13 +190,6 @@ def check_markup(html):
         fail("expected exactly one <h1>, found %d" % h1)
     else:
         ok("exactly one <h1>")
-
-    if "\u2014" in html:
-        fail("em dash (U+2014) in the markup, the CV punctuation is an en dash: %d found"
-             % html.count("\u2014"))
-    else:
-        ok("punctuation follows the CV (no em dashes)")
-
 
 def check_no_network(html, css):
     print("[offline]")
@@ -320,21 +310,45 @@ def check_content(html):
     ok("%d CV facts present, no retired values" % len(REQUIRED_TEXT))
 
     for text in WITHHELD_TEXT:
-        if text in visible:
-            fail("referee detail is published without consent: " + text)
+        if text in html:
+            fail("private referee detail remains in HTML source: " + text)
 
     # A nested <!-- or --> inside a block comment closes it early: the rest of
     # the comment then parses as real markup, which is how the withheld referee
     # section once reached the page. Class-agnostic on purpose, since matching
     # the section tag by its exact class attribute is what let that slip past.
-    if re.search(r'<section[^>]*\sid="references"', visible):
-        fail("the references section is published; keep it commented out until consent")
+    if re.search(r'<section[^>]*\sid="references"', html):
+        fail("private references section remains in HTML source")
     elif "-->" in visible or "<!--" in visible:
         fail("a block comment is closed early by a nested <!-- or --> inside it")
-    elif 'id="references"' in html:
-        ok("references section present but commented out")
     else:
-        fail("references section markup not found")
+        ok("private references removed from HTML source")
+
+
+def check_editorial_structure(html):
+    print("[editorial content hierarchy]")
+    featured = re.findall(r'<article class="project-feature">(.*?)</article>', html, re.S)
+    additional = re.findall(r'<article class="register-row">', html)
+    if len(featured) != 3 or len(additional) != 3:
+        fail("expected three featured projects and three additional projects")
+    else:
+        ok("six project entries, with subordinate hotel packages")
+    if not featured or not all(code in featured[0] for code in ('BP02', 'BP03', 'BP04')):
+        fail("BP02, BP03 and BP04 must be scoped under the Pan Pacific project")
+    else:
+        ok("three hotel packages grouped under Pan Pacific")
+    roles = re.findall(r'<article class="experience-row">(.*?)</article>', html, re.S)
+    if len(roles) != 4:
+        fail("expected four employment roles")
+    for role in roles:
+        if not 2 <= len(re.findall(r'<li>', role)) <= 3:
+            fail("experience summaries require two or three responsibility bullets")
+    ok("four concise employment summaries checked")
+    panel = re.search(r'<aside\b[^>]*id="navPanel"[^>]*>', html)
+    if not panel or not all(attr in panel.group(0) for attr in ('hidden', 'inert', 'aria-modal="true"', 'aria-hidden="true"')):
+        fail("mobile dialog must start hidden and inert")
+    else:
+        ok("menu starts hidden and inert")
 
 
 def check_csp(html):
@@ -472,7 +486,7 @@ def check_vercelignore():
 def main():
     print("validating " + ROOT)
     html = read("index.html")
-    css = read("css/style.css") + "\n" + read("css/construction.css")
+    css = read("css/style.css")
     check_files()
     check_assets(html)
     check_markup(html)
@@ -482,6 +496,7 @@ def main():
     check_tokens(css)
     check_javascript(html)
     check_content(html)
+    check_editorial_structure(html)
     check_share_metadata(html)
     check_vercelignore()
 

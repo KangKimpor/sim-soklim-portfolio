@@ -1,0 +1,12 @@
+@font-face { font-family: Archivo; src: url('../fonts/Archivo-var.woff2'); font-weight: 100 900; }
+@font-face { font-family: SourceSerif; src: url('../fonts/SourceSerif4-var.woff2'); font-weight: 200 900; }
+* { box-sizing: border-box; }
+body { margin: 0; width: 1200px; height: 630px; background: #FAF9F6; color: #202724; font-family: Archivo, sans-serif; }
+main { padding: 54px 72px; }
+.card-top, .card-bottom { display: flex; align-items: center; justify-content: space-between; }
+.card-top { color: #626B64; font-size: 13px; letter-spacing: 2px; }
+.monogram { width: 48px; height: 48px; display: grid; place-items: center; color: #345C4A; border: 1px solid #345C4A; letter-spacing: -1px; font-size: 18px; }
+.role { color: #345C4A; letter-spacing: 3px; font-size: 16px; margin: 46px 0 16px; }
+h1 { font: 450 104px/1 SourceSerif, Georgia, serif; letter-spacing: -5px; margin: 0; }
+.intro { color: #626B64; font-size: 24px; line-height: 1.5; margin: 28px 0 46px; }
+.card-bottom { padding-top: 22px; border-top: 1px solid #D9DED8; font-size: 14px; color: #345C4A; }

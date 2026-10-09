@@ -4,48 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="Sim Soklim, Civil Engineer and Project Control professional with over eight years of construction experience, covering project coordination, scheduling, progress monitoring, procurement tracking, and management reporting.">
-  <!-- Kept in step with --paper in css/construction.css, so the browser chrome blends
-       into the page instead of ending in a second, near-miss off-white. -->
-  <meta name="theme-color" content="#eceae6">
+  <meta name="theme-color" content="#FAF9F6">
   <meta name="color-scheme" content="light">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <!-- The canonical URL is the stable production alias, not the per-deployment
-       URL, which carries a fresh hash on every build. -->
-  <link rel="canonical" href="https://sim-soklim-portfolio-orpin.vercel.app/">
+  <link rel="canonical" href="https://sim-soklim-portfolio.vercel.app/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Sim Soklim">
-  <meta property="og:url" content="https://sim-soklim-portfolio-orpin.vercel.app/">
+  <meta property="og:url" content="https://sim-soklim-portfolio.vercel.app/">
   <meta property="og:title" content="Sim Soklim | Civil Engineer · Project Control">
   <meta property="og:description" content="Civil Engineer and Project Control professional with over eight years of construction experience in Phnom Penh, Cambodia.">
-  <!-- Absolute URLs: Facebook, LinkedIn and Twitter do not resolve a relative
-       og:image, which silently produced an image-less share card. -->
-  <meta property="og:image" content="https://sim-soklim-portfolio-orpin.vercel.app/images/og-hero.jpg">
+  <meta property="og:image" content="https://sim-soklim-portfolio.vercel.app/images/og-hero.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Sim Soklim, Civil Engineer and Project Control, Phnom Penh">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Sim Soklim | Civil Engineer · Project Control">
   <meta name="twitter:description" content="Civil Engineer and Project Control professional with over eight years of construction experience in Phnom Penh, Cambodia.">
-  <meta name="twitter:image" content="https://sim-soklim-portfolio-orpin.vercel.app/images/og-hero.jpg">
+  <meta name="twitter:image" content="https://sim-soklim-portfolio.vercel.app/images/og-hero.jpg">
   <meta name="twitter:image:alt" content="Sim Soklim, Civil Engineer and Project Control, Phnom Penh">
   <title>Sim Soklim | Civil Engineer · Project Control</title>
-  <!-- The two faces that paint first: display heading and body copy -->
   <link rel="preload" as="font" type="font/woff2" href="fonts/Archivo-var.woff2" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href="fonts/SourceSerif4-var.woff2" crossorigin>
-  <link rel="preload" as="image" href="images/hero.webp" fetchpriority="high">
+  <link rel="preload" as="image" href="images/portrait-cutout.webp" fetchpriority="high">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/construction.css">
 </head>
 <body>
-
   <a class="skip-link" href="#main">Skip to content</a>
-
-  <!-- Inline SVG sprite: icons cost no requests and inherit currentColor -->
   <svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <symbol id="ico-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 3.6v16.6M6.2 14.2 12 20.2l5.8-6"/>
-      </symbol>
       <symbol id="ico-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 20.4V3.8M6.2 9.8 12 3.8l5.8 6"/>
       </symbol>
@@ -55,315 +41,89 @@
       <symbol id="ico-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3.4 6.2h17.2v11.6H3.4z"/><path d="m4.1 7 7.9 6.1L20 7"/>
       </symbol>
-      <symbol id="ico-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-      </symbol>
-      <symbol id="ico-linkedin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-        <rect x="2" y="9" width="4" height="12"/>
-        <circle cx="4" cy="4" r="2"/>
-      </symbol>
       <symbol id="ico-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
         <polyline points="7 10 12 15 17 10"/>
         <line x1="12" y1="15" x2="12" y2="3"/>
       </symbol>
-      <symbol id="ico-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-        <circle cx="12" cy="10" r="3"/>
-      </symbol>
     </defs>
   </svg>
 
-  <!-- ===== Top navigation ===== -->
+
   <header class="topbar">
     <div class="wrap topbar-inner">
-      <a class="brand" href="#overview" aria-label="Sim Soklim, back to overview">
-        <span class="brand-mark" aria-hidden="true">SS</span>
-        <span class="brand-text">
-          <span class="brand-name">Sim Soklim</span>
-          <span class="brand-role">Civil Engineer · Project Control</span>
-        </span>
-      </a>
-
-      <nav class="nav" aria-label="Primary">
-        <a class="nav-link" data-nav href="#overview"><span class="nav-num">00</span>Overview</a>
-        <a class="nav-link" data-nav href="#experience-and-education"><span class="nav-num">01</span>Experience</a>
-        <a class="nav-link" data-nav href="#core-competencies"><span class="nav-num">02</span>Competencies</a>
-        <a class="nav-link" data-nav href="#selected-projects"><span class="nav-num">03</span>Projects</a>
-        <a class="nav-link" data-nav href="#contact"><span class="nav-num">04</span>Contact</a>
-      </nav>
-
-      <div class="topbar-actions">
-        <a class="btn btn-accent btn-sm topbar-email-link" href="mailto:soklimlll@gmail.com">
-          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-mail"></use></svg>
-          <span>Email</span>
-        </a>
-        <button class="burger" id="navToggle" type="button" aria-label="Open menu" aria-haspopup="dialog" aria-expanded="false" aria-controls="navPanel">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-
-      <!-- Scroll progress: filled by js/script.js -->
-      <div class="progress" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+      <a class="brand" href="#overview" aria-label="Sim Soklim, overview"><span class="brand-mark" aria-hidden="true">SS</span><span>Sim Soklim</span></a>
+      <nav class="nav" aria-label="Primary"><a class="nav-link" data-nav href="#selected-projects">Projects</a><a class="nav-link" data-nav href="#experience-and-education">Experience</a><a class="nav-link" data-nav href="#contact">Contact</a><a class="nav-link nav-cv" href="assets/Sim-Soklim-CV.pdf" download="Sim-Soklim-CV.pdf">Download CV</a></nav>
+      <button class="menu-toggle" id="navToggle" type="button" aria-label="Open menu" aria-haspopup="dialog" aria-expanded="false" aria-controls="navPanel">Menu <span aria-hidden="true">+</span></button>
     </div>
   </header>
-    <div class="tape" aria-hidden="true"></div>
-
-  <!-- ===== Mobile drawer ===== -->
-  <div class="drawer-backdrop" id="navBackdrop"></div>
-  <aside class="drawer" id="navPanel" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Sections menu" inert>
-    <div class="drawer-head">
-      <span class="drawer-brand">Sim Soklim</span>
-      <button class="drawer-close" id="navClose" type="button" aria-label="Close menu">
-        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-close"></use></svg>
-      </button>
-    </div>
-    <nav class="drawer-links" aria-label="Mobile">
-      <a class="drawer-link" data-nav href="#overview"><span class="drawer-num">00</span>Overview</a>
-      <a class="drawer-link" data-nav href="#experience-and-education"><span class="drawer-num">01</span>Experience &amp; Education</a>
-      <a class="drawer-link" data-nav href="#core-competencies"><span class="drawer-num">02</span>Core Competencies</a>
-      <a class="drawer-link" data-nav href="#selected-projects"><span class="drawer-num">03</span>Selected Projects</a>
-      <a class="drawer-link" data-nav href="#contact"><span class="drawer-num">04</span>Contact</a>
-    </nav>
-    <div class="drawer-foot">
-      <p class="drawer-strong">Sim Soklim</p>
-      <p>Civil Engineer · Project Control</p>
-      <p>Phnom Penh, Cambodia</p>
-      <p><a href="mailto:soklimlll@gmail.com">soklimlll@gmail.com</a></p>
-      <p><a href="tel:+85595810472">+855 95 810 472</a></p>
-    </div>
+  <div class="drawer-backdrop" id="navBackdrop" hidden></div>
+  <aside class="drawer" id="navPanel" role="dialog" aria-modal="true" aria-label="Sections menu" aria-hidden="true" inert hidden>
+    <div class="drawer-head"><span>Sim Soklim</span><button class="drawer-close" id="navClose" type="button" aria-label="Close menu"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-close"></use></svg></button></div>
+    <nav class="drawer-links" aria-label="Mobile"><a class="drawer-link" data-nav href="#overview">Overview</a>
+<a class="drawer-link" data-nav href="#selected-projects">Projects</a>
+<a class="drawer-link" data-nav href="#experience-and-education">Experience</a>
+<a class="drawer-link" data-nav href="#core-competencies">Expertise</a>
+<a class="drawer-link" data-nav href="#contact">Contact</a></nav>
+    <div class="drawer-foot"><p>Civil Engineer · Project Control</p><a href="mailto:soklimlll@gmail.com">soklimlll@gmail.com</a></div>
   </aside>
-
-  <main id="main">
-
-    <!-- ===== 00  Overview ===== -->
-    <section class="hero" id="overview">
-      <div class="wrap">
-        <div class="hero-grid">
-
-          <div>
-            <div class="hero-lead">
-              <p class="eyebrow"><span class="eyebrow-index">CV</span> Civil Engineer · Project Control</p>
-              <h1 class="hero-title">Project coordination, from drawing to handover.</h1>
-            </div>
-
-            <p class="hero-lede">Civil Engineer and project control professional with over eight years of construction experience, including more than six years supporting project coordination, scheduling, progress monitoring, procurement tracking, documentation, and management reporting. Experienced in collecting and consolidating project information, monitoring planned versus actual progress, identifying delays and variances, and coordinating contractors, consultants, suppliers, and internal teams. Proficient in Microsoft Project and supported by Civil Quantity Surveyor training.</p>
-
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="#experience-and-education">
-                <span>View experience</span>
-                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow-down"></use></svg>
-              </a>
-              <a class="btn btn-secondary" href="#contact">
-                <span>Contact</span>
-                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-mail"></use></svg>
-              </a>
-              <a class="btn btn-secondary" href="tel:+85595810472">
-                <span>Call</span>
-                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-phone"></use></svg>
-              </a>
-              <a class="btn btn-accent" href="assets/Sim-Soklim-CV.pdf" download="Sim-Soklim-CV.pdf">
-                <span>Download CV</span>
-                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-download"></use></svg>
-              </a>
-            </div>
-
-            <div class="hero-meta">
-              <span class="mono-note">Phnom Penh, Cambodia</span>
-              <span class="mono-note">Available to work on site</span>
-              <span class="mono-note">Nine selected projects</span>
-            </div>
-          </div>
-
-          <div class="hero-aside">
-            <div class="spec-card">
-              <div class="spec-frame">
-                <span class="corner corner-tl" aria-hidden="true"></span>
-                <span class="corner corner-tr" aria-hidden="true"></span>
-                <span class="corner corner-bl" aria-hidden="true"></span>
-                <span class="corner corner-br" aria-hidden="true"></span>
-                <div class="portrait-frame">
-                  <span class="portrait-tile" aria-hidden="true">SS</span>
-                  <img src="images/portrait-cutout.webp" alt="Portrait of Sim Soklim" width="202" height="283" fetchpriority="high" decoding="async">
-                </div>
-              </div>
-              <p class="spec-caption"><span>Fig. 01</span> Sim Soklim · Phnom Penh</p>
-              <dl class="spec-facts">
-                <div class="spec-fact"><dt>Role</dt><dd>Senior Project Coordinator</dd></div>
-                <div class="spec-fact"><dt>Employer</dt><dd>SingBuild Construction</dd></div>
-                <div class="spec-fact"><dt>Experience</dt><dd>Over 8 years, construction</dd></div>
-                <div class="spec-fact"><dt>Based</dt><dd>Phnom Penh, Cambodia</dd></div>
-                <div class="spec-fact"><dt>Tools</dt><dd>Microsoft Project, Excel, AutoCAD</dd></div>
-              </dl>
-            </div>
-          </div>
-
+  <main id="main" tabindex="-1">
+    <section class="hero" id="overview" tabindex="-1">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow hero-role">Civil Engineer · Project Control</p>
+          <h1>Sim Soklim</h1>
+          <p class="hero-lede">Over eight years in construction, supporting project coordination, scheduling, progress reporting and procurement tracking across building and infrastructure works.</p>
+          <div class="hero-actions"><a class="btn btn-primary" href="assets/Sim-Soklim-CV.pdf" download="Sim-Soklim-CV.pdf">Download CV <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-download"></use></svg></a><a class="btn btn-secondary" href="#contact">Contact <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-mail"></use></svg></a></div>
+          <div class="hero-meta"><span>Senior Project Coordinator · SingBuild Construction</span><span>Phnom Penh, Cambodia</span></div>
         </div>
+        <figure class="hero-portrait">
+          <div class="portrait-frame"><span class="portrait-fallback" aria-hidden="true">SS</span><img src="images/portrait-cutout.webp" alt="Portrait of Sim Soklim" width="202" height="283" fetchpriority="high" decoding="async"></div>
+        </figure>
       </div>
     </section>
-
-    <!-- ===== Featured band ===== -->
-    <figure class="band">
-      <div class="band-wrap wrap-wide">
-        <img class="band-img" src="images/hero.webp" alt="Construction imagery representing the National Assembly Building and the Techo International Airport Air Traffic Control Tower" width="2400" height="1350" fetchpriority="high" decoding="async">
-      </div>
-      <figcaption class="wrap band-caption">
-        <span class="mono-note">National Assembly Building · Techo International Airport Air Traffic Control Tower</span>
-        <span class="band-note">Review build · placeholder photography</span>
-      </figcaption>
-    </figure>
-
-    <!-- ===== 01  Experience & Education ===== -->
-    <section class="section" id="experience-and-education">
+    <section class="section" id="selected-projects" tabindex="-1">
       <div class="wrap">
-        <header class="section-head">
-          <p class="eyebrow"><span class="eyebrow-index">01</span> Experience &amp; Education</p>
-          <h2 class="section-title">Work and study.</h2>
-          <p class="section-lede">Over eight years of construction experience across quality assurance, project coordination and project control, built on a civil engineering degree and continued through specialist training.</p>
-        </header>
+        <header class="section-head"><p class="eyebrow">01 / Selected work</p><div class="section-heading"><h2>Selected projects</h2><p>Hotel interiors, civic buildings and airport infrastructure, with experience across coordination, construction management and quality assurance.</p></div></header>
+        <div class="featured-projects"><article class="project-feature">
+  <div class="project-top"><p class="eyebrow">Hotel &amp; interior works</p><span class="project-index" aria-hidden="true">01</span></div>
+  <h3>Pan Pacific Hotel</h3><p class="project-scope">NBC · Norodom Business Center</p>
+  <details class="project-details"><summary>Hotel work packages</summary><ul class="project-packages"><li><strong>BP02 · Rooms &amp; corridors</strong>Interior works, L23–L13, phases 1 &amp; 2; 226 guest rooms and 11 floors of lift lobbies &amp; corridors.</li><li><strong>BP03 · Lobby &amp; meeting room</strong>Ground floor lobby, L11 meeting room, lift car and audio-visual.</li><li><strong>BP04 · Lounge &amp; restaurants</strong>Interior &amp; MEP works, L23 club lounge and L24 specialty restaurant / HLT &amp; all-day dining.</li></ul></details>
+  <div class="project-credit"><p>Senior Project Coordinator</p><p>SingBuild Construction</p></div>
+</article>
+<article class="project-feature">
+  <div class="project-top"><p class="eyebrow">Construction management</p><span class="project-index" aria-hidden="true">02</span></div>
+  <h3>National Assembly Building</h3><p class="project-scope">B2 + ground floor + 11 floors + roof</p>
+  <div class="project-credit"><p>Project Coordinator</p><p>TCV Engineering Co., Ltd.</p><span class="project-status">Completed</span></div>
+</article>
+<article class="project-feature">
+  <div class="project-top"><p class="eyebrow">Airport infrastructure</p><span class="project-index" aria-hidden="true">03</span></div>
+  <h3>Techo International Airport</h3><p class="project-scope">Air Traffic Control Tower and Base Building, ground floor through Level 16</p>
+  <div class="project-credit"><p>Assistant to Project Manager</p><p>Cana Sino Construction Corporation</p></div>
+</article></div>
+        <div class="project-register"><h3 class="register-title">Additional work</h3>
 
-        <div class="section-split">
-          <div class="timeline">
 
-            <!-- Current role -->
-            <article class="timeline-item">
-              <span class="timeline-node" aria-hidden="true"></span>
-              <div class="timeline-meta">
-                <p class="timeline-period"><time datetime="2025-11">Nov 2025</time> – present</p>
-                <span class="status-pill status-live"><span class="pill-dot" aria-hidden="true"></span>Present</span>
-              </div>
-              <div class="timeline-body card card-lift">
-                <div class="entry-head">
-                  <h3 class="entry-title">Senior Project Coordinator</h3>
-                  <p class="entry-org">SingBuild Construction · Phnom Penh, Cambodia</p>
-                </div>
-                <div class="entry-projects">
-                  <p class="entry-label">Projects</p>
-                  <ul class="entry-projects-list">
-                    <li>NBC – Pan Pacific Hotel, Norodom Business Center</li>
-                    <li>BP02 – ID Works for Hotel Rooms &amp; Corridors L23-L13 Phase 1 &amp; 2, 226-Unit Guest Rooms &amp; 11 Floor Lift Lobby &amp; Corridors</li>
-                    <li>BP03 – ID Works for GF Floor Lobby &amp; L11 Meeting Room &amp; Lift Car and Audio-Visual</li>
-                    <li>BP04 – ID &amp; MEP Works for L23 Club Lounge &amp; L24 Specialty Restaurant / HLT &amp; All-Day Dining</li>
-                    <li>UVP2 – Penthouse Type 05 (ID and MEP Works for Penthouse Type 5)</li>
-                    <li>Other tendering project: Proposed construction schedule at the tendering stage</li>
-                  </ul>
-                </div>
-                <p class="entry-label">Key responsibilities</p>
-                <ul class="entry-list">
-                  <li>Prepare and update construction schedules using Microsoft Project for tender and project-execution activities.</li>
-                  <li>Coordinate schedule inputs and progress updates across project managers, site teams, consultants, subcontractors, procurement teams and suppliers.</li>
-                  <li>Monitor planned versus actual progress and highlight delays, constraints, schedule conflicts and required corrective actions.</li>
-                  <li>Track procurement, material approvals, shop drawings, RFIs and submittals against required project dates.</li>
-                  <li>Support the development of catch-up plans and recovery actions for delayed procurement, drawings and construction activities.</li>
-                  <li>Review and consolidate progress information for management reports and coordination meetings.</li>
-                  <li>Prepare and maintain schedule-related records, correspondence, action logs and supporting documentation.</li>
-                  <li>Support the preparation of Extension of Time notices and schedule information related to delays and changes.</li>
-                  <li>Coordinate multiple work packages and trades to maintain alignment with project milestones.</li>
-                  <li>Lead or support coordination meetings and follow up responsible parties until outstanding actions are closed.</li>
-                  <li>Prepare preliminary construction schedules for tender submissions.</li>
-                  <li>Mentor junior coordinators and monitor compliance with project-documentation requirements.</li>
-                </ul>
-              </div>
-            </article>
-
-            <!-- Role 2 -->
-            <article class="timeline-item">
-              <span class="timeline-node" aria-hidden="true"></span>
-              <div class="timeline-meta">
-                <p class="timeline-period"><time datetime="2022-04">Apr 2022</time> – <time datetime="2025-08">Aug 2025</time></p>
-                <span class="status-pill status-done">Completed</span>
-              </div>
-              <div class="timeline-body card card-lift">
-                <div class="entry-head">
-                  <h3 class="entry-title">Project Coordinator</h3>
-                  <p class="entry-org">TCV Engineering Co., Ltd. · Phnom Penh, Cambodia</p>
-                </div>
-                <div class="entry-projects">
-                  <p class="entry-label">Project</p>
-                  <ul class="entry-projects-list">
-                    <li>National Assembly Building (B2 + G + 11 Floors + Roof) – Completed (Construction Management)</li>
-                  </ul>
-                </div>
-                <p class="entry-label">Key responsibilities</p>
-                <ul class="entry-list">
-                  <li>Maintained project schedules and monitored actual progress against planned milestones.</li>
-                  <li>Coordinated progress information among contractors, consultants, suppliers and site teams.</li>
-                  <li>Tracked submittals, RFIs, material approvals, inspections and outstanding decisions that could affect the schedule.</li>
-                  <li>Prepared progress reports, meeting minutes, coordination logs and look-ahead information for management review.</li>
-                  <li>Identified delayed activities and followed up with responsible parties to support timely resolution.</li>
-                  <li>Coordinated site inspections, material deliveries and documentation requirements with the construction programme.</li>
-                  <li>Maintained accurate project records for reporting, audit and handover purposes.</li>
-                  <li>Supported final inspections, defect closure and the preparation of hard-copy and electronic handover documentation.</li>
-                </ul>
-              </div>
-            </article>
-
-            <!-- Role 3 -->
-            <article class="timeline-item">
-              <span class="timeline-node" aria-hidden="true"></span>
-              <div class="timeline-meta">
-                <p class="timeline-period"><time datetime="2020-05">May 2020</time> – <time datetime="2022-03">Mar 2022</time></p>
-                <span class="status-pill status-done">Completed</span>
-              </div>
-              <div class="timeline-body card card-lift">
-                <div class="entry-head">
-                  <h3 class="entry-title">Assistant to Project Manager</h3>
-                  <p class="entry-org">Cana Sino Construction Corporation · Phnom Penh, Cambodia</p>
-                </div>
-                <div class="entry-projects">
-                  <p class="entry-label">Project</p>
-                  <ul class="entry-projects-list">
-                    <li>Techo International Airport – Air Traffic Control Tower and Base Building, ground floor through Level 16</li>
-                  </ul>
-                </div>
-                <p class="entry-label">Key responsibilities</p>
-                <ul class="entry-list">
-                  <li>Supported the Project Manager with schedule coordination, progress tracking and project reporting.</li>
-                  <li>Monitored milestones, deliverables and deadlines and escalated potential delays or coordination issues.</li>
-                  <li>Coordinated information among design consultants, contractors, subcontractors and site teams.</li>
-                  <li>Reviewed material submittals, shop drawings and RFIs before submission for approval.</li>
-                  <li>Updated project trackers and contributed to periodic progress reports.</li>
-                  <li>Recorded and followed up actions from coordination meetings until closure.</li>
-                  <li>Maintained project correspondence, meeting records and document-control systems.</li>
-                </ul>
-              </div>
-            </article>
-
-            <!-- Role 4 -->
-            <article class="timeline-item">
-              <span class="timeline-node" aria-hidden="true"></span>
-              <div class="timeline-meta">
-                <p class="timeline-period"><time datetime="2018-04">Apr 2018</time> – <time datetime="2020-04">Apr 2020</time></p>
-                <span class="status-pill status-done">Completed</span>
-              </div>
-              <div class="timeline-body card card-lift">
-                <div class="entry-head">
-                  <h3 class="entry-title">QA &amp; QC Engineer</h3>
-                  <p class="entry-org">Cana Sino Construction Corporation · Phnom Penh, Cambodia</p>
-                </div>
-                <div class="entry-projects">
-                  <p class="entry-label">Projects</p>
-                  <ul class="entry-projects-list">
-                    <li>The Elysee Building 3.5 and 3.6 – Build Structure from Ground Floor to Level 6th</li>
-                    <li>Fly Over Bridge of Kbal Thnol – Build Bridge Structure</li>
-                  </ul>
-                </div>
-                <p class="entry-label">Key responsibilities</p>
-                <ul class="entry-list">
-                  <li>Reviewed construction works against approved drawings, specifications and quality requirements.</li>
-                  <li>Prepared Inspection and Test Plans and conducted site inspections across building and bridge projects.</li>
-                  <li>Raised and monitored NCRs and coordinated defect closure with contractors and subcontractors.</li>
-                  <li>Reviewed material submittals, test certificates and mock-up approvals.</li>
-                  <li>Maintained quality, inspection, audit and handover records and reported outstanding quality issues.</li>
-                </ul>
-              </div>
-            </article>
-
-          </div>
-
-          <!-- Study -->
-          <div class="study">
+<article class="register-row"><p class="register-ref">UVP2</p><div><h4>Penthouse Type 05</h4><p>Interior &amp; MEP works for Penthouse Type 5</p></div><p class="register-employer">SingBuild Construction</p></article>
+<article class="register-row"><p class="register-ref">04</p><div><h4>The Elysee Building 3.5 and 3.6</h4><p>Building structure, ground floor through Level 6</p></div><p class="register-employer">Cana Sino Construction Corporation</p></article>
+<article class="register-row"><p class="register-ref">05</p><div><h4>Fly Over Bridge of Kbal Thnol</h4><p>Bridge structure</p></div><p class="register-employer">Cana Sino Construction Corporation</p></article></div>
+      </div>
+    </section>
+    <section class="section experience-section" id="experience-and-education" tabindex="-1">
+      <div class="wrap">
+        <header class="section-head"><p class="eyebrow">02 / Experience</p><div class="section-heading"><h2>A career built on site</h2><p>Construction experience since 2018, progressing from quality assurance to project coordination and control.</p></div></header>
+        <div class="experience-listing"><article class="experience-row"><p class="experience-date"><time datetime="2025-11">Nov 2025</time> – present</p><div><h3>Senior Project Coordinator</h3><p class="experience-org">SingBuild Construction · Phnom Penh, Cambodia</p><ul class="experience-list"><li>Prepare and update construction schedules using Microsoft Project for tender and project-execution activities.</li><li>Monitor planned versus actual progress and track procurement, material approvals, shop drawings, RFIs and submittals against required dates.</li><li>Review and consolidate progress information for management reports and coordination meetings.</li></ul></div></article><article class="experience-row"><p class="experience-date"><time datetime="2022-04">Apr 2022</time> – <time datetime="2025-08">Aug 2025</time></p><div><h3>Project Coordinator</h3><p class="experience-org">TCV Engineering Co., Ltd. · Phnom Penh, Cambodia</p><ul class="experience-list"><li>Maintained project schedules and monitored progress, submittals, RFIs and material approvals.</li><li>Coordinated progress information among contractors, consultants, suppliers and site teams.</li><li>Supported final inspections, defect closure and the preparation of hard-copy and electronic handover documentation.</li></ul></div></article><article class="experience-row"><p class="experience-date"><time datetime="2020-05">May 2020</time> – <time datetime="2022-03">Mar 2022</time></p><div><h3>Assistant to Project Manager</h3><p class="experience-org">Cana Sino Construction Corporation · Phnom Penh, Cambodia</p><ul class="experience-list"><li>Supported the Project Manager with schedule coordination, progress tracking and project reporting.</li><li>Coordinated information among design consultants, contractors, subcontractors and site teams.</li><li>Reviewed material submittals, shop drawings and RFIs before submission for approval.</li></ul></div></article><article class="experience-row"><p class="experience-date"><time datetime="2018-04">Apr 2018</time> – <time datetime="2020-04">Apr 2020</time></p><div><h3>QA &amp; QC Engineer</h3><p class="experience-org">Cana Sino Construction Corporation · Phnom Penh, Cambodia</p><ul class="experience-list"><li>Prepared Inspection and Test Plans and conducted site inspections across building and bridge projects.</li><li>Raised and monitored NCRs and coordinated defect closure with contractors and subcontractors.</li><li>Maintained quality, inspection, audit and handover records and reported outstanding quality issues.</li></ul></div></article></div>
+        <a class="text-link" href="assets/Sim-Soklim-CV.pdf" download="Sim-Soklim-CV.pdf">Full responsibilities in the CV <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-download"></use></svg></a>
+      </div>
+    </section>
+    <section class="section" id="core-competencies" tabindex="-1">
+      <div class="wrap">
+        <header class="section-head"><p class="eyebrow">03 / Expertise &amp; education</p><div class="section-heading"><h2>The foundations of the work</h2><p>Project control capabilities supported by a civil engineering degree and specialist training.</p></div></header>
+        <div class="expertise-grid">
+          <div class="expertise"><div class="cap-group"><h3>Coordination &amp; control</h3><ul class="cap-list"><li>Project Control and Coordination</li><li>Schedule and Progress Monitoring</li><li>Risk and Variance Identification</li><li>Contractor and Stakeholder Coordination</li></ul></div>
+          <div class="cap-group"><h3>Reporting &amp; procurement</h3><ul class="cap-list"><li>Project Data Collection and Reporting</li><li>Procurement and Cost Tracking</li><li>Budget Monitoring</li><li>Management Reporting</li><li>Document Control and Monitoring</li></ul></div>
+          <div class="cap-group"><h3>Tools</h3><p class="tools-line">Microsoft Project<br>Microsoft Excel and Office</p></div></div>
+                    <div class="study">
             <div class="study-group">
               <h3 class="study-group-title">Education</h3>
               <div class="study-list">
@@ -400,7 +160,6 @@
                     <span class="study-year">2019</span>
                   </div>
                   <p class="study-org">Ecam School · Phnom Penh, Cambodia</p>
-                  <p class="study-note">Provides a useful foundation for cost awareness and budget-related project control.</p>
                 </div>
                 <div class="study-item">
                   <div class="study-item-head">
@@ -412,313 +171,15 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
-
-    <!-- ===== 02  Core Competencies ===== -->
-    <section class="section section-alt" id="core-competencies">
-      <div class="wrap">
-        <header class="section-head">
-          <p class="eyebrow"><span class="eyebrow-index">02</span> Core Competencies</p>
-          <h2 class="section-title">Technical and control capability.</h2>
-          <p class="section-lede">The capabilities a project control role leans on daily, as listed in the curriculum vitae: coordination, data and reporting, procurement tracking, and the tools that support them.</p>
-        </header>
-
-        <div class="capabilities">
-          <div class="cap-group">
-            <h3 class="cap-group-title"><span class="marker" aria-hidden="true"></span>Coordination and control</h3>
-            <ul class="cap-list">
-              <li class="cap-item"><span class="cap-num">01</span>Project Control and Coordination</li>
-              <li class="cap-item"><span class="cap-num">02</span>Schedule and Progress Monitoring</li>
-              <li class="cap-item"><span class="cap-num">03</span>Risk and Variance Identification</li>
-              <li class="cap-item"><span class="cap-num">04</span>Contractor and Stakeholder Coordination</li>
-            </ul>
-          </div>
-
-          <div class="cap-group">
-            <h3 class="cap-group-title"><span class="marker" aria-hidden="true"></span>Data, reporting and procurement</h3>
-            <ul class="cap-list">
-              <li class="cap-item"><span class="cap-num">05</span>Project Data Collection and Reporting</li>
-              <li class="cap-item"><span class="cap-num">06</span>Procurement and Cost Tracking</li>
-              <li class="cap-item"><span class="cap-num">07</span>Budget Monitoring</li>
-              <li class="cap-item"><span class="cap-num">08</span>Management Reporting</li>
-              <li class="cap-item"><span class="cap-num">09</span>Document Control and Monitoring</li>
-            </ul>
-          </div>
-
-          <div class="cap-group cap-group-wide">
-            <h3 class="cap-group-title"><span class="marker" aria-hidden="true"></span>Tools and software</h3>
-            <div class="tool-tags">
-              <span class="tool-tag"><span class="marker" aria-hidden="true"></span>Microsoft Project</span>
-              <span class="tool-tag"><span class="marker" aria-hidden="true"></span>Microsoft Excel and Office</span>
-            </div>
-          </div>
-        </div>
-      </div>
+    <section class="section contact-section" id="contact" tabindex="-1">
+      <div class="wrap contact-grid"><div><p class="eyebrow">04 / Contact</p><h2>Let’s talk about<br>your next project.</h2><p class="contact-intro">Based in Phnom Penh, Cambodia.<br>Available to work on site.</p><a class="btn btn-primary" href="assets/Sim-Soklim-CV.pdf" download="Sim-Soklim-CV.pdf">Download CV <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-download"></use></svg></a></div>
+      <dl class="contact-channels"><div><dt>Email</dt><dd><a href="mailto:soklimlll@gmail.com">soklimlll@gmail.com <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-mail"></use></svg></a></dd></div><div><dt>Telephone</dt><dd><a href="tel:+85595810472">+855 95 810 472</a></dd></div><div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/soklim-sim-6589221a4/" target="_blank" rel="noopener noreferrer">Sim Soklim <span class="external-link" aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></dd></div></dl></div>
     </section>
-
-    <!-- ===== 03  Selected Projects ===== -->
-    <section class="section" id="selected-projects">
-      <div class="wrap">
-        <header class="section-head">
-          <p class="eyebrow"><span class="eyebrow-index">03</span> Selected Projects</p>
-          <h2 class="section-title">Project register.</h2>
-          <p class="section-lede">Nine packages coordinated or monitored across hotel fit-out, national assembly construction, airport infrastructure, commercial buildings and bridge works.</p>
-        </header>
-
-        <div class="register">
-          <div class="register-head" aria-hidden="true">
-            <span>Ref</span>
-            <span>Package and scope</span>
-            <span>Status</span>
-          </div>
-
-          <div class="register-row">
-            <span class="register-index">01</span>
-            <div>
-              <h3 class="register-name">NBC – Pan Pacific Hotel, Norodom Business Center</h3>
-              <p class="register-role">Senior Project Coordinator · SingBuild Construction</p>
-            </div>
-            <div class="register-status"><span class="status-pill status-live"><span class="pill-dot" aria-hidden="true"></span>Present</span></div>
-          </div>
-
-          <div class="register-row">
-            <span class="register-index">02</span>
-            <div>
-              <h3 class="register-name">BP02 – ID Works for Hotel Rooms &amp; Corridors L23-L13 (Phase 1 &amp; 2), 226-Unit Guest Rooms &amp; 11 Floor Lift Lobby &amp; Corridors</h3>
-              <p class="register-role">Senior Project Coordinator · SingBuild Construction</p>
-            </div>
-            <div class="register-status"><span class="status-pill status-live"><span class="pill-dot" aria-hidden="true"></span>Present</span></div>
-          </div>
-
-          <div class="register-row">
-            <span class="register-index">03</span>
-            <div>
-              <h3 class="register-name">BP03 – ID Works for GF Floor Lobby &amp; L11 Meeting Room &amp; Lift Car and Audio-Visual</h3>
-              <p class="register-role">Senior Project Coordinator · SingBuild Construction</p>
-            </div>
-            <div class="register-status"><span class="status-pill status-live"><span class="pill-dot" aria-hidden="true"></span>Present</span></div>
-          </div>
-
-          <div class="register-row">
-            <span class="register-index">04</span>
-            <div>
-              <h3 class="register-name">BP04 – ID &amp; MEP Works for L23 Club Lounge &amp; L24 Specialty Restaurant / HLT &amp; All-Day Dining</h3>
-              <p class="register-role">Senior Project Coordinator · SingBuild Construction</p>
-            </div>
-            <div class="register-status"><span class="status-pill status-live"><span class="pill-dot" aria-hidden="true"></span>Present</span></div>
-          </div>
-
-          <div class="register-row">
-            <span class="register-index">05</span>
-            <div>
-              <h3 class="register-name">UVP2 – Penthouse Type 05 (ID and MEP Works for Penthouse Type 5)</h3>
-              <p class="register-role">Senior Project Coordinator · SingBuild Construction</p>
-            </div>
-            <div class="register-status"><span class="status-pill status-live"><span class="pill-dot" aria-hidden="true"></span>Present</span></div>
-          </div>
-
-          <div class="register-row">
-            <span class="register-index">06</span>
-            <div>
-              <h3 class="register-name">National Assembly Building (B2 + G + 11 Floors + Roof)</h3>
-              <p class="register-role">Project Coordinator · TCV Engineering Co., Ltd.</p>
-            </div>
-            <div class="register-status"><span class="status-pill status-done">Completed</span></div>
-          </div>
-
-          <div class="register-row">
-            <span class="register-index">07</span>
-            <div>
-              <h3 class="register-name">Techo International Airport – Air Traffic Control Tower and Base Building</h3>
-              <p class="register-role">Assistant to Project Manager · Cana Sino Construction Corporation</p>
-            </div>
-            <div class="register-status"><span class="status-pill status-done">Completed</span></div>
-          </div>
-
-          <div class="register-row">
-            <span class="register-index">08</span>
-            <div>
-              <h3 class="register-name">The Elysee Building 3.5 and 3.6 – Build Structure from Ground Floor to Level 6th</h3>
-              <p class="register-role">QA &amp; QC Engineer · Cana Sino Construction Corporation</p>
-            </div>
-            <div class="register-status"><span class="status-pill status-done">Completed</span></div>
-          </div>
-
-          <div class="register-row">
-            <span class="register-index">09</span>
-            <div>
-              <h3 class="register-name">Fly Over Bridge of Kbal Thnol – Build Bridge Structure</h3>
-              <p class="register-role">QA &amp; QC Engineer · Cana Sino Construction Corporation</p>
-            </div>
-            <div class="register-status"><span class="status-pill status-done">Completed</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== 04  Contact ===== -->
-    <section class="section section-alt" id="contact">
-      <div class="wrap">
-        <header class="section-head">
-          <p class="eyebrow"><span class="eyebrow-index">04</span> Contact</p>
-          <h2 class="section-title">Get in touch.</h2>
-          <p class="section-lede">Direct channels for project control, construction coordination and schedule enquiries, based in Phnom Penh and available to work on site.</p>
-        </header>
-
-        <div class="contact-grid">
-          <div class="contact-card card">
-            <p class="card-kicker">Direct channels</p>
-            <dl class="channel-list">
-              <div class="channel-row">
-                <dt>Email</dt>
-                <dd><a href="mailto:soklimlll@gmail.com">soklimlll@gmail.com</a></dd>
-              </div>
-              <div class="channel-row">
-                <dt>Telephone</dt>
-                <dd><a href="tel:+85595810472">+855 95 810 472</a></dd>
-              </div>
-              <div class="channel-row">
-                <dt>LinkedIn</dt>
-                <dd><a href="https://www.linkedin.com/in/soklim-sim-6589221a4/" target="_blank" rel="noopener noreferrer">linkedin.com/in/soklim-sim-6589221a4</a></dd>
-              </div>
-              <div class="channel-row">
-                <dt>Address</dt>
-                <dd>Phnom Penh, Cambodia</dd>
-              </div>
-            </dl>
-          </div>
-
-          <div class="contact-card card availability">
-            <p class="card-kicker">Availability</p>
-            <p class="availability-note">Based in Phnom Penh and available to work on site.</p>
-            <p class="mono-note">Schedule monitoring · Progress reporting · Procurement tracking · Management reporting</p>
-            <span class="availability-badge">
-              <svg class="ico ico-accent" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-pin"></use></svg>
-              <span>Phnom Penh, Cambodia</span>
-            </span>
-          </div>
-        </div>
-
-        <div class="cta">
-          <div class="cta-inner">
-            <div class="cta-copy">
-              <h3 class="cta-title">Request the full curriculum vitae</h3>
-              <p class="cta-note">The complete work history with key responsibilities, education, trainings and references, in a single document.</p>
-            </div>
-            <div class="cta-actions">
-              <a class="btn btn-accent" href="assets/Sim-Soklim-CV.pdf" download="Sim-Soklim-CV.pdf">
-                <span>Download CV</span>
-                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-download"></use></svg>
-              </a>
-              <a class="btn btn-secondary" href="mailto:soklimlll@gmail.com">
-                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-mail"></use></svg>
-                <span>Email Sim Soklim</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!--
-    ========================================================================
-    05 // References
-    Held back on purpose. The referees below are transcribed from the CV, but
-    their names and direct numbers are not published until the client gives
-    written consent. To publish: remove the comment markers around this block
-    and add a matching link to the top navigation.
-    tools/_validate.py fails while this section is visible, so it cannot be
-    released by accident.
-    ========================================================================
-    <section class="section" id="references">
-      <div class="wrap">
-        <header class="section-head">
-          <p class="eyebrow"><span class="eyebrow-index">05</span> References</p>
-          <h2 class="section-title">Professional references.</h2>
-          <p class="section-lede">Referees listed in the curriculum vitae, available on request.</p>
-        </header>
-
-        <div class="references-grid">
-          <div class="card reference-card">
-            <p class="reference-name">Mr. Pich Rathy</p>
-            <p class="reference-title">Director of State Property Management Department · National Assembly Cambodia</p>
-            <p class="reference-phone"><a href="tel:+85511651168">+855 11 651 168</a></p>
-          </div>
-
-          <div class="card reference-card">
-            <p class="reference-name">Mr. Richard Abas Lorbes</p>
-            <p class="reference-title">Assistant Project Manager · SingBuild Construction</p>
-            <p class="reference-phone"><a href="tel:+855969567510">+855 96 956 7510</a></p>
-          </div>
-
-          <div class="card reference-card">
-            <p class="reference-name">Mr. Ryan Koh</p>
-            <p class="reference-title">Project Manager · SingBuild Construction</p>
-            <p class="reference-phone"><a href="tel:+85569840234">+855 69 840 234</a></p>
-          </div>
-
-          <div class="card reference-card">
-            <p class="reference-name">Mr. Sam Sithih</p>
-            <p class="reference-title">HSE Manager</p>
-            <p class="reference-phone"><a href="tel:+85516229666">+855 16 229 666</a></p>
-          </div>
-
-          <div class="card reference-card">
-            <p class="reference-name">Mr. Hok YekSrun</p>
-            <p class="reference-title">QA/QC Manager</p>
-            <p class="reference-phone"><a href="tel:+85593878818">+855 93 878 818</a></p>
-          </div>
-        </div>
-      </div>
-    </section>
-    ========================================================================
-    -->
-
   </main>
-
-  <!-- ===== Footer ===== -->
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-grid">
-        <div>
-          <p class="footer-name">Sim Soklim</p>
-          <p class="footer-copy">Civil Engineer and project control professional with over eight years of construction experience, including more than six years supporting project coordination, scheduling, progress monitoring, procurement tracking, documentation, and management reporting.</p>
-        </div>
-
-        <nav class="footer-links" aria-label="Footer">
-          <a href="#overview">Overview</a>
-          <a href="#experience-and-education">Experience &amp; Education</a>
-          <a href="#core-competencies">Core Competencies</a>
-          <a href="#selected-projects">Selected Projects</a>
-          <a href="#contact">Contact</a>
-        </nav>
-
-        <dl class="spec-sheet">
-          <div><dt>Role</dt><dd>Senior Project Coordinator</dd></div>
-          <div><dt>Employer</dt><dd>SingBuild Construction</dd></div>
-          <div><dt>Based</dt><dd>Phnom Penh, Cambodia</dd></div>
-          <div><dt>Email</dt><dd><a href="mailto:soklimlll@gmail.com">soklimlll@gmail.com</a></dd></div>
-          <div><dt>Tel</dt><dd><a href="tel:+85595810472">+855 95 810 472</a></dd></div>
-          <div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/soklim-sim-6589221a4/" target="_blank" rel="noopener noreferrer"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-linkedin"></use></svg> soklim-sim-6589221a4</a></dd></div>
-        </dl>
-      </div>
-
-      <div class="footer-base">
-        <p class="footer-fine">&copy; <span id="year">2026</span> Sim Soklim · Transcribed from the curriculum vitae and covering letter dated 24 September 2026.</p>
-        <nav class="footer-links footer-links-row" aria-label="Footer actions">
-          <a class="back-to-top" id="backToTop" href="#overview">
-            <span>Back to top</span>
-            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow-up"></use></svg>
-          </a>
-          <a href="assets/Sim-Soklim-CV.pdf" download="Sim-Soklim-CV.pdf">Download CV (PDF)</a>
-        </nav>
-      </div>
-    </div>
-  </footer>
-
+  <footer class="footer"><div class="wrap footer-inner"><p>© <span id="year">2026</span> Sim Soklim</p><a class="back-to-top" href="#overview">Back to top <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#ico-arrow-up"></use></svg></a></div></footer>
   <script src="js/script.js" defer></script>
 </body>
 </html>
