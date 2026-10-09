@@ -46,7 +46,7 @@ SERVED = [
     "/fonts/Archivo-var.woff2",
     "/fonts/SourceSerif4-var.woff2",
     "/images/og-hero.jpg",
-    "/images/portrait-cutout.webp",
+    "/images/sim-soklim-portrait.png",
     "/assets/Sim-Soklim-CV.pdf",
     "/favicon.svg",
     "/robots.txt",

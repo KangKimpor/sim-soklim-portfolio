@@ -70,8 +70,8 @@ h1 { font-family: var(--font-display); font-weight: 450; font-size: clamp(64px, 
 .hero-meta { display: grid; gap: 3px; margin-top: 28px; font-size: 13px; color: var(--muted); }
 .hero-meta span:first-child { color: var(--ink); }
 .hero-portrait { width: min(300px, 100%); justify-self: end; }
-.portrait-frame { position: relative; display: grid; align-items: end; justify-items: center; height: 375px; background: var(--portrait); }
-.portrait-frame img { position: relative; z-index: 1; width: 240px; max-width: 100%; height: auto; }
+.portrait-frame { position: relative; display: grid; aspect-ratio: 1; overflow: hidden; background: var(--portrait); }
+.portrait-frame img { position: relative; z-index: 1; display: block; width: 100%; height: auto; }
 .portrait-fallback { position: absolute; inset: 0; display: grid; place-items: center; color: var(--forest); font-family: var(--font-display); font-size: 64px; }
 .portrait-frame.is-empty img { display: none; }
 .section { padding-block: 88px; border-top: 1px solid var(--rule); }
@@ -155,8 +155,6 @@ h1 { font-family: var(--font-display); font-weight: 450; font-size: clamp(64px, 
   .hero-grid { grid-template-columns: 1fr; gap: 40px; }
   .hero-lede { max-width: 52ch; }
   .hero-portrait { justify-self: center; width: 240px; }
-  .portrait-frame { height: 300px; }
-  .portrait-frame img { width: 202px; }
   .section { padding-block: 64px; }
   .section-heading { grid-template-columns: 1fr; gap: 16px; }
   .featured-projects { grid-template-columns: 1fr; gap: 36px; }
@@ -184,8 +182,6 @@ h1 { font-family: var(--font-display); font-weight: 450; font-size: clamp(64px, 
   .btn { padding-inline: 13px; gap: 10px; font-size: 13px; }
   .hero-meta { margin-top: 22px; font-size: 12px; }
   .hero-portrait { width: 216px; }
-  .portrait-frame { height: 270px; }
-  .portrait-frame img { width: 182px; }
   .section-head { margin-bottom: 28px; }
   .section-head .eyebrow { margin-bottom: 14px; }
   .section-heading > p { font-size: 14px; }
@@ -220,8 +216,6 @@ h1 { font-family: var(--font-display); font-weight: 450; font-size: clamp(64px, 
   h2 { font-size: 22pt; }
   h3 { font-size: 15pt; }
   .hero-portrait { width: 150px; }
-  .portrait-frame { height: 190px; }
-  .portrait-frame img { width: 132px; }
   .featured-projects { grid-template-columns: 1fr; gap: 24px; }
   .project-packages { grid-template-columns: 1fr; }
   .project-feature, .register-row, .experience-row, .study-item { break-inside: avoid; }

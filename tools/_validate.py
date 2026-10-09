@@ -36,7 +36,7 @@ REQUIRED_FILES = [
     "css/style.css",
     "js/script.js",
     "images/og-hero.jpg",
-    "images/portrait-cutout.webp",
+    "images/sim-soklim-portrait.png",
     "assets/Sim-Soklim-CV.pdf",
     "favicon.svg",
     "robots.txt",

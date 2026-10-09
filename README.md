@@ -2,7 +2,7 @@
 
 A static professional profile for a civil engineer and project control professional in Phnom Penh. The page presents verified CV content in an editorial layout: overview, selected projects, experience, expertise and education, then contact.
 
-Archivo is used for body text and interface labels; Source Serif 4 is used for the name. Both fonts ship locally. The portrait is the existing CV photo. The 1200 × 630 social card is original typography, with its source in `tools/social-card.html` and `tools/social-card.css`.
+Archivo is used for body text and interface labels; Source Serif 4 is used for the name. Both fonts ship locally. The portrait uses the supplied 800 × 800 photo, preserved in its original PNG format at `images/sim-soklim-portrait.png`. Its square frame scales from 300 px on desktop to 216 px on phones. The 1200 × 630 social card is original typography, with its source in `tools/social-card.html` and `tools/social-card.css`.
 
 The project section shows three featured projects and three additional projects. BP02, BP03 and BP04 are work packages under Pan Pacific Hotel / Norodom Business Center, available through the native “Hotel work packages” disclosure. Employment dates are kept in the experience section; only the National Assembly project carries the source's explicit completion status. Each of the four roles has three concise responsibilities; the CV retains the detailed history.
 
